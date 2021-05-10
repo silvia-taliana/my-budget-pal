@@ -5,7 +5,7 @@ function Nav() {
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
             <a className="navbar-brand" href="/">
                 Home
-      </a>
+            </a>
         </nav>
     );
 }
