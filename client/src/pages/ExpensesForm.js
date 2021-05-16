@@ -1,6 +1,12 @@
 import React from "react";
 
 function ExpensesForm() {
+
+    const addExpenseFormHandler = async (event) => {
+        event.preventDefault();
+        console.log(event);
+    }
+
     return (
         <div>
             <h1>Expenses</h1>
@@ -10,8 +16,8 @@ function ExpensesForm() {
                 <label>Amount:</label>
                 <input placeholder="$"></input>
                 <label>Frequency:</label>
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Please select</option>
+                <select className="form-select" aria-label="Default select example">
+                    <option defaultValue>Please select</option>
                     <option value="Weekly">Weekly</option>
                     <option value="Fortnightly">Fortnightly</option>
                     <option value="Monthly">Monthly</option>
@@ -19,7 +25,7 @@ function ExpensesForm() {
                     <option value="Yearly">Yearly</option>
                     <option value="Other">Other</option>
                 </select>
-                <button>Add Expense</button>
+                <button onClick={addExpenseFormHandler}>Add Expense</button>
                 <button>Finish</button>
             </form>
         </div>

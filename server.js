@@ -1,45 +1,37 @@
 // getting dependencies and routes 
-const path = require('path');
+// require('dotenv').config();
 const express = require('express');
-const session = require('express-session');
-// const exphbs = require('express-handlebars');
-// const routes = require('./controllers');
-// const helpers = require('./utils/helpers');
-
-// setting up the connection with sequelize using the connection.js
-const sequelize = require('./config/connection');
-
-// connecting sequelize through session store 
-const SequelizeStore = require('connect-session-sequelize')(session.Store);
-
+const mongoose = require('mongoose');
+const routes = require('./routes');
 const app = express();
 const PORT = process.env.PORT || 3001;
-
 // const hbs = exphbs.create({ helpers });
 
-// creating an object that stores information for the current session
-const sess = {
-    secret: 'Super secret secret',
-    cookie: {},
-    resave: false,
-    saveUninitialized: true,
-    store: new SequelizeStore({
-        db: sequelize
-    })
-};
-
-// using the information stored in the current session 
-app.use(session(sess));
-
-// app.engine('handlebars', hbs.engine);
-// app.set('view engine', 'handlebars');
-
-app.use(express.json());
+// Define middleware here
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static("client/public"));
+}
 
-// app.use(routes);
+// Add routes, both API and view
+app.use(routes);
 
-sequelize.sync({ force: false }).then(() => {
-    app.listen(PORT, () => console.log('Now listening'));
+// Connect to the Mongo DB
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/mybudgetpal",
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false
+    }
+);
+
+const db = mongoose.connection;
+db.on('error', (error) => console.error(error));
+db.once('open', () => console.log('Connected to Database'));
+
+// Start the API server
+app.listen(PORT, function () {
+    console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });

@@ -1,9 +1,12 @@
-const db = require("../models");
+
+
+const db = require("../models/index");
 
 // Defining methods for the expensessController
 module.exports = {
     findAll: function (req, res) {
-        db.Expenses
+        console.log(res + "hello")
+        db.Expense
             .find(req.query)
             // .sort({ date: -1 })
             .then(dbModel => res.json(dbModel))
@@ -15,12 +18,12 @@ module.exports = {
     //         .then(dbModel => res.json(dbModel))
     //         .catch(err => res.status(422).json(err));
     // },
-    create: function (req, res) {
-        db.Expenses
-            .create(req.body)
-            .then(dbModel => res.json(dbModel))
-            .catch(err => res.status(422).json(err));
-    },
+    // create: function (req, res) {
+    // db.Expenses
+    //     .create(req.body)
+    //     .then(dbModel => res.json(dbModel))
+    //     .catch(err => res.status(422).json(err));
+    // },
     // update: function (req, res) {
     //     db.Expenses
     //         .findOneAndUpdate({ _id: req.params.id }, req.body)
