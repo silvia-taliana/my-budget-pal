@@ -3,10 +3,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const expensesSchema = new Schema({
-    title: { type: String, required: true },
-    author: { type: String, required: true },
-    synopsis: String,
-    date: { type: Date, default: Date.now }
+    type: { type: String, required: true },
+    amount: { type: Number, required: true },
+    frequency: String,
 });
 
 const Expense = mongoose.model("Expense", expensesSchema);

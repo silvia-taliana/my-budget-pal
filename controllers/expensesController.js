@@ -5,11 +5,12 @@ const db = require("../models/index");
 // Defining methods for the expensessController
 module.exports = {
     findAll: function (req, res) {
-        console.log(res + "hello")
         db.Expense
             .find(req.query)
             // .sort({ date: -1 })
-            .then(dbModel => res.json(dbModel))
+            .then(dbModel => {
+                res.json(dbModel)
+            })
             .catch(err => res.status(422).json(err));
     },
     // findById: function (req, res) {

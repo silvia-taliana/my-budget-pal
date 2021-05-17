@@ -7,15 +7,12 @@ function Homepage() {
 
     const [expense, setExpenses] = useState([""]);
     const [items, setItems] = useState([])
-    console.log(expense);
 
     useEffect(() => {
         API.getExpenses()
             .then(res => {
-                console.log(res)
-                res.json()
+                setItems(res.data)
             })
-            .then(json => setItems(json))
             .catch(err => console.log(err));
     }, [expense]);
 
