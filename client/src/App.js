@@ -1,11 +1,10 @@
 import React from "react";
-import Login from "./pages/Login";
-import Homepage from "./pages/Homepage";
 import ExpensesForm from "./pages/ExpensesForm";
 import SavingsForm from "./pages/SavingsForm";
 // import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav/Nav";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
@@ -13,10 +12,9 @@ function App() {
       <div>
         <Nav />
         <Switch>
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/home" component={Homepage} />
-          <Route exact path="/expensesForm" component={ExpensesForm} />
-          <Route exact path="/savingsForm" component={SavingsForm} />
+          <Route exact path="/" component={LandingPage} />
+          <Route exact path="/expenses" component={ExpensesForm} />
+          <Route exact path="/savings" component={SavingsForm} />
           {/* <Route path="*" component={NoMatch} /> */}
         </Switch>
       </div>
