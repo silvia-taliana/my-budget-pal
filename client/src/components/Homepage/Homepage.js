@@ -5,12 +5,12 @@ import Saving from "../Saving/Saving";
 import { useAuth0 } from '@auth0/auth0-react';
 
 function Homepage() {
-
     // logout function
     const { logout } = useAuth0();
 
     // user information
     const { user, isAuthenticated } = useAuth0();
+    console.log(user);
 
     // setting state 
     const [expense, setExpenses] = useState([""]);

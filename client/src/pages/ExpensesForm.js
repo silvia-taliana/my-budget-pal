@@ -23,7 +23,7 @@ function ExpensesForm() {
                     <option value="Monthly">Monthly</option>
                     <option value="Quarterly">Quarterly</option>
                     <option value="Yearly">Yearly</option>
-                    <option value="Other">Other</option>
+                    {/* <option value="Other">Other</option> */}
                 </select>
                 <button onClick={addExpenseFormHandler}>Add Expense</button>
                 <button>Finish</button>

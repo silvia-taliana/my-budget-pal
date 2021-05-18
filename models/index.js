@@ -1,5 +1,6 @@
 module.exports = {
-    Expense: require("./Expenses")
+    Expense: require("./Expenses"),
+    Saving: require("./Savings")
 };
 
 

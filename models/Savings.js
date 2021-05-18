@@ -1,3 +1,20 @@
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+const savingsSchema = new Schema({
+    goal: { type: String, required: true },
+    amount: { type: Number, required: true },
+    timeframe: {
+        week: Number,
+        month: Number,
+        Year: Number,
+    },
+});
+
+const Saving = mongoose.model("Saving", savingsSchema);
+
+module.exports = Saving;
+
 // const { Model, DataTypes } = require('sequelize');
 // const sequelize = require('../config/connection');
 
