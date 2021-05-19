@@ -3,8 +3,11 @@ import React from "react";
 function Nav() {
     return (
         <nav>
-            <a href="/home">
+            <a href="/">
                 Home
+            </a>
+            <a href="/testpage">
+                Test
             </a>
         </nav>
     );
