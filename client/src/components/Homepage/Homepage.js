@@ -53,6 +53,8 @@ function Homepage() {
 
                 <h2>Savings List</h2>
                 <Saving />
+
+                {/* <Piechart /> */}
             </div>
         )
     );
