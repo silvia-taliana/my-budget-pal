@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 // import Route from "react-router-dom";
 import API from "../../utils/API";
 // import Expense from "../components/Expense/Expense";
-import Saving from "../Saving/Saving";
+// import Saving from "../Saving/Saving";
 import { useAuth0 } from '@auth0/auth0-react';
 
 function Homepage() {
@@ -11,20 +11,34 @@ function Homepage() {
 
     // user information
     const { user, isAuthenticated } = useAuth0();
-    console.log(user);
-    console.log(isAuthenticated);
+    // console.log(user);
+    // console.log(isAuthenticated);
 
     // setting state 
     const [expense, setExpenses] = useState([""]);
-    const [items, setItems] = useState([])
+    const [items, setItems] = useState([]);
+    const [saving, setSavings] = useState([""]);
+    const [goals, setGoals] = useState([]);
 
     useEffect(() => {
         API.getExpenses()
             .then(res => {
-                setItems(res.data)
+                // console.log(res.data);
+                setItems(res.data);
+                // console.log(items);
             })
             .catch(err => console.log(err));
     }, [expense]);
+
+    useEffect(() => {
+        API.getSavings()
+            .then(res => {
+                // console.log(res.data);
+                setGoals(res.data);
+                // console.log(goals);
+            })
+            .catch(err => console.log(err));
+    }, [saving]);
 
     // function loadExpenses() {
     //     API.getExpenses()
@@ -45,7 +59,7 @@ function Homepage() {
             </button>
 
                 <h2>Expenses List</h2>
-                <button onClick={() => setExpenses("testing")}>Testing</button>
+                <button onClick={() => setExpenses("testing")}>Testing Expenses</button>
 
                 <h3>{expense}</h3>
                 {items.map(item => {
@@ -53,7 +67,11 @@ function Homepage() {
                 })}
 
                 <h2>Savings List</h2>
-                <Saving />
+                <button onClick={() => setSavings("testing")}>Testing Savings</button>
+                <h3>{saving}</h3>
+                {goals.map(goal => {
+                    return <pre>{JSON.stringify(goal)}</pre>
+                })}
 
                 {/* <Piechart /> */}
             </div>

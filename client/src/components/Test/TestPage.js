@@ -31,7 +31,10 @@ function Profile() {
     };
 
     const testUnAuthedRoute = async () => {
-        const response = await fetch("/api/noAuth").then((res) => res.json());
+        const response = await fetch("/api/noAuth").then((res) => {
+            res.json();
+            console.log(res);
+        });
         console.log(response);
         setResult(response);
     };
@@ -46,23 +49,34 @@ function Profile() {
                 },
             }).then((res) => res.json());
             console.log(response);
-            setResult(response);
+            // setResult(response);
         } catch (err) {
             console.log(err);
-            setResult(err);
+            // setResult(err);
         }
     };
 
 
     return (
         <>
+            {user ? (
+                <div>
+                    <h1>{user.name}</h1>
+                    <p><strong>Email: </strong>
+                        {user.email} <br />
+                        <strong>Id: </strong>
+                        {user.sub}</p>
+                </div>
+            ) : (
+                <div>Not logged in</div>
+            )}
             <button onClick={testAuthedRoute}>Test Authed Route</button>{' '}
             <button onClick={testUnAuthedRoute}>Test Non Authed Route</button>{' '}
             <button onClick={getUserInfo}>Get User Info</button>{' '}
             <div>
                 <h2>Result</h2>
                 <div>
-                    <pre>{JSON.stringify(result, null, 4)}</pre>
+                    <pre>{JSON.stringify(result)}</pre>
                 </div>
             </div>
         </>

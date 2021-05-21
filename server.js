@@ -26,7 +26,7 @@ app.use(routes);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 if (process.env.NODE_ENV === "production") {
-    app.use(express.static("client/public"));
+    app.use(express.static("client/build"));
 }
 
 // if (!authConfig.domain || !authConfig.audience) {
@@ -58,6 +58,8 @@ const checkJwt = jwt({
 });
 
 app.get("/api/noAuth", (req, res) => {
+    console.log("we hit the no auth route woooo!");
+    res.send({ msg: "the no auth button worked!" })
     res.json({ result: "Response Success" });
 });
 
@@ -67,6 +69,7 @@ app.get("/api/withAuth", checkJwt, (req, res) => {
 });
 
 app.get("/api/user", checkJwt, async (req, res) => {
+    console.log("made it this far");
     const result = await fetch(`${process.env.AUTH0_DOMAIN}userinfo`, {
         headers: { Authorization: req.headers.authorization }
     }).then(res => res.json());
@@ -87,6 +90,10 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/mybudgetpal",
 const db = mongoose.connection;
 db.on('error', (error) => console.error(error));
 db.once('open', () => console.log('Connected to Database'));
+
+app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
 
 // Start the API server
 app.listen(PORT, function () {

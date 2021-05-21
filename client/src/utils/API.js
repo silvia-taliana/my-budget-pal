@@ -13,9 +13,9 @@ function getExpenses() {
 }
 
 // Gets all savings
-// function getSavings() {
-//     return axios.get("/api/savings");
-// }
+function getSavings() {
+    return axios.get("/api/savings");
+}
 
-const getBudgetData = { getExpenses };
+const getBudgetData = { getExpenses, getSavings };
 export default getBudgetData;

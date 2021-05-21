@@ -1,13 +1,19 @@
-const db = require("../models");
+const db = require("../models/index");
 
 // Defining methods for the savingssController
 module.exports = {
     findAll: function (req, res) {
-        db.Savings
+        db.Saving
             .find(req.query)
             // .sort({ date: -1 })
-            .then(dbModel => res.json(dbModel))
-            .catch(err => res.status(422).json(err));
+            .then(dbModel => {
+                res.json(dbModel);
+                console.log(dbModel);
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(422).json(err);
+            });
     },
     // findById: function (req, res) {
     //     db.Savings
@@ -15,12 +21,12 @@ module.exports = {
     //         .then(dbModel => res.json(dbModel))
     //         .catch(err => res.status(422).json(err));
     // },
-    create: function (req, res) {
-        db.Savings
-            .create(req.body)
-            .then(dbModel => res.json(dbModel))
-            .catch(err => res.status(422).json(err));
-    },
+    // create: function (req, res) {
+    //     db.Savings
+    //         .create(req.body)
+    //         .then(dbModel => res.json(dbModel))
+    //         .catch(err => res.status(422).json(err));
+    // },
     // update: function (req, res) {
     //     db.Savings
     //         .findOneAndUpdate({ _id: req.params.id }, req.body)
