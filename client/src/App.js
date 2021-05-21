@@ -12,8 +12,7 @@ import { Auth0Provider } from '@auth0/auth0-react';
 
 function App() {
 
-  const { isLoading, error } = useAuth0();
-  console.log(isLoading);
+  const { error } = useAuth0();
   if (error) {
     return <div>Oops... {error.message}</div>;
   }

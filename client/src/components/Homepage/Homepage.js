@@ -12,6 +12,7 @@ function Homepage() {
     // user information
     const { user, isAuthenticated } = useAuth0();
     console.log(user);
+    console.log(isAuthenticated);
 
     // setting state 
     const [expense, setExpenses] = useState([""]);
