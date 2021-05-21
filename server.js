@@ -19,9 +19,6 @@ const fetch = require('node-fetch');
 // const appPort = process.env.SERVER_PORT || 3001;
 // const appOrigin = authConfig.appOrigin || `http://localhost:${appPort}`;
 
-// Add routes, both API and view
-app.use(routes);
-
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -53,18 +50,19 @@ const checkJwt = jwt({
         jwksUri: `${process.env.AUTH0_DOMAIN}.well-known/jwks.json`
     }),
     audience: process.env.AUTH0_AUDIENCE,
-    issuer: [process.env.AUTH0_DOMAIN],
+    issuer: process.env.AUTH0_DOMAIN,
     algorithms: ['RS256'],
 });
 
 app.get("/api/noAuth", (req, res) => {
     console.log("we hit the no auth route woooo!");
-    res.send({ msg: "the no auth button worked!" })
+    // res.send({ msg: "the no auth button worked!" });
     res.json({ result: "Response Success" });
 });
 
 app.get("/api/withAuth", checkJwt, (req, res) => {
     console.log(req.user);
+    // res.send({ msg: "the auth button worked!" });
     res.json({ result: "Authed successfully", user: req.user });
 });
 
@@ -74,8 +72,12 @@ app.get("/api/user", checkJwt, async (req, res) => {
         headers: { Authorization: req.headers.authorization }
     }).then(res => res.json());
     console.log(result);
+    // res.send({ msg: "the get user button worked!" });
     res.json({ result: "Authed successfully", userInfo: result });
 });
+
+// Add routes, both API and view
+app.use(routes);
 
 // Connect to the Mongo DB
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/mybudgetpal",
