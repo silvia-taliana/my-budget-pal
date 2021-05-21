@@ -1,6 +1,8 @@
 import React from "react";
 
 function SavingsForm() {
+
+    // returning html
     return (
         <div>
             <h1>Savings</h1>

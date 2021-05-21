@@ -8,7 +8,7 @@ function LandingPage() {
 
     // if page is loading, the loading component will be rendered, once loaded, the page will return
     const { isLoading, error, isAuthenticated } = useAuth0();
-    // console.log(isLoading);
+
     if (error) {
         return <div>Oops... {error.message}</div>;
     }

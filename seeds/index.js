@@ -1,35 +1,11 @@
 const mongoose = require("mongoose");
 const db = require("../models");
 
-// This file empties the Books collection and inserts the books below
-
+// This file empties the expenses/savings collections and inserts the expenses/savings below
 mongoose.connect(
     process.env.MONGODB_URI ||
     "mongodb://localhost/mybudgetpal"
 );
-
-// const userData = [
-//     {
-//         name: 'Ronald',
-//         email: 'ronald@email.com',
-//         password: 'password123',
-//     },
-//     {
-//         name: 'Ginny',
-//         email: 'ginny@email.com',
-//         password: 'password123',
-//     },
-//     {
-//         name: 'George',
-//         email: 'george@email.com',
-//         password: 'password123',
-//     },
-//     {
-//         name: 'Fred',
-//         email: 'fred@email.com',
-//         password: 'password123',
-//     },
-// ];
 
 const expenseData = [
     {
@@ -92,9 +68,6 @@ const savingData = [
         },
     },
 ];
-
-// let MyBudgetPal = userData.concat(expenseData, savingData);
-// console.log(MyBudgetPal);
 
 db.Expense
     .remove({})

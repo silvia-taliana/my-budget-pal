@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import Route from "react-router-dom";
 import API from "../../utils/API";
 // import Expense from "../components/Expense/Expense";
 // import Saving from "../Saving/Saving";
@@ -11,8 +10,6 @@ function Homepage() {
 
     // user information
     const { user, isAuthenticated } = useAuth0();
-    // console.log(user);
-    // console.log(isAuthenticated);
 
     // setting state 
     const [expense, setExpenses] = useState([""]);
@@ -20,12 +17,11 @@ function Homepage() {
     const [saving, setSavings] = useState([""]);
     const [goals, setGoals] = useState([]);
 
+    // functions to update state when buttons are clicked below
     useEffect(() => {
         API.getExpenses()
             .then(res => {
-                // console.log(res.data);
                 setItems(res.data);
-                // console.log(items);
             })
             .catch(err => console.log(err));
     }, [expense]);
@@ -33,21 +29,12 @@ function Homepage() {
     useEffect(() => {
         API.getSavings()
             .then(res => {
-                // console.log(res.data);
                 setGoals(res.data);
-                // console.log(goals);
             })
             .catch(err => console.log(err));
     }, [saving]);
 
-    // function loadExpenses() {
-    //     API.getExpenses()
-    //         .then(res =>
-    //             setExpenses(res.data)
-    //         )
-    //         .catch(err => console.log(err));
-    // };
-
+    // rendering html on to screen providing user is authenticated
     return (
         isAuthenticated && (
             <div>

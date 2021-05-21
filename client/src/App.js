@@ -11,17 +11,13 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 function App() {
 
+  // if error, return error
   const { error } = useAuth0();
   if (error) {
     return <div>Oops... {error.message}</div>;
   }
 
-  // console.log({
-  //   domain: process.env.REACT_APP_AUTH0_DOMAIN,
-  //   client: process.env.REACT_APP_AUTH0_CLIENT_ID,
-  //   audience: process.env.REACT_APP_AUTH0_AUDIENCE,
-  // })
-
+  // defining routes
   return (
     <Router>
       <div>

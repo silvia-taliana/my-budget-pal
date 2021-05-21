@@ -1,5 +1,4 @@
 // getting dependencies and routes 
-// require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const routes = require('./routes');
@@ -11,14 +10,6 @@ const jwksRsa = require('jwks-rsa');
 require("dotenv").config();
 const fetch = require('node-fetch');
 
-// const cors = require("cors");
-// const morgan = require("morgan");
-// const helmet = require("helmet");
-// const authConfig = require("./client/src/auth_config.json");
-
-// const appPort = process.env.SERVER_PORT || 3001;
-// const appOrigin = authConfig.appOrigin || `http://localhost:${appPort}`;
-
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -26,22 +17,7 @@ if (process.env.NODE_ENV === "production") {
     app.use(express.static("client/build"));
 }
 
-// if (!authConfig.domain || !authConfig.audience) {
-//     throw new Error(
-//         "Please make sure that auth_config.json is in place and populated"
-//     );
-// }
-
-// app.use(morgan("dev"));
-// app.use(helmet());
-// app.use(cors({ origin: appOrigin }));
-
-// app.get("/api/public", (req, res) => {
-//     res.send({
-//         msg: "You called the public API!"
-//     });
-// });
-
+// function to check if user is authorized 
 const checkJwt = jwt({
     secret: jwksRsa.expressJwtSecret({
         cache: true,
@@ -54,18 +30,21 @@ const checkJwt = jwt({
     algorithms: ['RS256'],
 });
 
+// test route - getting information that doesnt require authorization
 app.get("/api/noAuth", (req, res) => {
     console.log("we hit the no auth route woooo!");
     // res.send({ msg: "the no auth button worked!" });
     res.json({ result: "Response Success" });
 });
 
+// test route - getting information requiring authorization
 app.get("/api/withAuth", checkJwt, (req, res) => {
     console.log(req.user);
     // res.send({ msg: "the auth button worked!" });
     res.json({ result: "Authed successfully", user: req.user });
 });
 
+// test route - getting user information with authorization 
 app.get("/api/user", checkJwt, async (req, res) => {
     console.log("made it this far");
     const result = await fetch(`${process.env.AUTH0_DOMAIN}userinfo`, {
@@ -89,10 +68,12 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/mybudgetpal",
     }
 );
 
+// testing to make sure database connection is working 
 const db = mongoose.connection;
 db.on('error', (error) => console.error(error));
 db.once('open', () => console.log('Connected to Database'));
 
+// sending static file to app if no routes are hit
 app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });

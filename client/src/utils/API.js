@@ -1,12 +1,5 @@
 import axios from "axios";
 
-// export default {
-//     // Gets all expenses
-//     getExpenses: function () {
-//         return axios.get("/api/expenses");
-//     }
-// };
-
 // Gets all expenses
 function getExpenses() {
     return axios.get("/api/expenses");

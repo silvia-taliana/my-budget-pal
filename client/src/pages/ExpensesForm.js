@@ -2,11 +2,13 @@ import React from "react";
 
 function ExpensesForm() {
 
+    // function to submit form on click
     const addExpenseFormHandler = async (event) => {
         event.preventDefault();
         console.log(event);
     }
 
+    // returning html
     return (
         <div>
             <h1>Expenses</h1>

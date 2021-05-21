@@ -1,10 +1,6 @@
 const router = require("express").Router();
 const expensesController = require("../../controllers/expensesController");
 
-// router.get('/', (req, res) => {
-//     res.send("hello world")
-// })
-
 // Matches with "/api/expenses"
 router.route("/")
     .get(expensesController.findAll)
