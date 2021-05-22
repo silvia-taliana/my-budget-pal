@@ -7,9 +7,9 @@ router.route("/")
 // .post(expensesController.create);
 
 // Matches with "/api/expenses/:id"
-// router
-//     .route("/:id")
-//     .get(expensesController.findById)
+router
+    .route("/:id")
+    .get(expensesController.find)
 //     .put(expensesController.update)
 //     .delete(expensesController.remove);
 

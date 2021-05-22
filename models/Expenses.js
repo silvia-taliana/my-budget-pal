@@ -6,6 +6,7 @@ const expensesSchema = new Schema({
     type: { type: String, required: true },
     amount: { type: Number, required: true },
     frequency: String,
+    user_id: String,
 });
 
 const Expense = mongoose.model("Expense", expensesSchema);

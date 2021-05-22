@@ -8,7 +8,6 @@ module.exports = {
             // .sort({ date: -1 })
             .then(dbModel => {
                 res.json(dbModel);
-                console.log(dbModel);
             })
             .catch(err => {
                 console.log(err);

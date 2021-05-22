@@ -10,12 +10,17 @@ function Homepage() {
 
     // user information
     const { user, isAuthenticated } = useAuth0();
+    // let user_id = user.sub;
+    // console.log(user.sub);
 
     // setting state 
     const [expense, setExpenses] = useState([""]);
     const [items, setItems] = useState([]);
     const [saving, setSavings] = useState([""]);
     const [goals, setGoals] = useState([]);
+
+    const [userexpense, setUserExpenses] = useState([""]);
+    const [useritems, setUserItems] = useState([]);
 
     // functions to update state when buttons are clicked below
     useEffect(() => {
@@ -25,6 +30,14 @@ function Homepage() {
             })
             .catch(err => console.log(err));
     }, [expense]);
+
+    useEffect(() => {
+        API.getExpensesById(user.sub)
+            .then(res => {
+                setUserItems(res.data);
+            })
+            .catch(err => console.log(err));
+    }, [userexpense]);
 
     useEffect(() => {
         API.getSavings()
@@ -46,19 +59,26 @@ function Homepage() {
             </button>
 
                 <h2>Expenses List</h2>
-                <button onClick={() => setExpenses("testing")}>Testing Expenses</button>
+                <button onClick={() => setExpenses(items.map(item => {
+                    console.log(item._id);
+                    return <pre key="item._id">{JSON.stringify(item)}</pre>
+                }))}>Testing Expenses</button>
 
                 <h3>{expense}</h3>
-                {items.map(item => {
-                    return <pre>{JSON.stringify(item)}</pre>
+
+                <h2>Expenses List by user</h2>
+                <button onClick={() => setUserExpenses("testing")}>Testing User Expenses</button>
+
+                <h3>{userexpense}</h3>
+                {useritems.map(useritem => {
+                    return <pre>{JSON.stringify(useritem)}</pre>
                 })}
 
                 <h2>Savings List</h2>
-                <button onClick={() => setSavings("testing")}>Testing Savings</button>
+                <button onClick={() => setSavings(goals.map(goal => {
+                    return <pre key="goal._id">{JSON.stringify(goal)}</pre>
+                }))}>Testing Savings</button>
                 <h3>{saving}</h3>
-                {goals.map(goal => {
-                    return <pre>{JSON.stringify(goal)}</pre>
-                })}
 
                 {/* <Piechart /> */}
             </div>

@@ -9,12 +9,15 @@ module.exports = {
             .then(dbModel => res.json(dbModel))
             .catch(err => res.status(422).json(err));
     },
-    // findById: function (req, res) {
-    //     db.Expenses
-    //         .findById(req.params.id)
-    //         .then(dbModel => res.json(dbModel))
-    //         .catch(err => res.status(422).json(err));
-    // },
+    find: function (req, res) {
+        db.Expense
+            .find({ user_id: req.params.id })
+            .then(dbModel => {
+                res.json(dbModel)
+            })
+            // .then(console.log(dbModel))
+            .catch(err => res.status(422).json(err));
+    },
     // create: function (req, res) {
     // db.Expenses
     //     .create(req.body)

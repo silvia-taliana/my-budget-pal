@@ -12,21 +12,25 @@ const expenseData = [
         type: 'mortgage',
         amount: 300,
         frequency: "fortnightly",
+        user_id: "google-oauth2|105678671351572796457",
     },
     {
         type: 'electricity bill',
         amount: 400,
         frequency: "quaterly",
+        user_id: "google-oauth2|105678671351572796457",
     },
     {
         type: 'gas bill',
         amount: 120,
         frequency: "quaterly",
+        user_id: "",
     },
     {
         type: 'water bill',
         amount: 200,
         frequency: "quaterly",
+        user_id: "",
     },
 ];
 
