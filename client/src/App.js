@@ -25,8 +25,8 @@ function App() {
         <Switch>
           <Route exact path="/" component={LandingPage} />
           <PrivateRoute exact path="/testpage" component={TestPage} />
-          <Route exact path="/expenses" component={ExpensesForm} />
-          <Route exact path="/savings" component={SavingsForm} />
+          <PrivateRoute exact path="/expenses" component={ExpensesForm} />
+          <PrivateRoute exact path="/savings" component={SavingsForm} />
           {/* <Route path="*" component={NoMatch} /> */}
         </Switch>
       </div>

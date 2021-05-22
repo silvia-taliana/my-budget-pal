@@ -9,6 +9,12 @@ function Nav() {
             <a href="/testpage">
                 Test
             </a>
+            <a href="/expenses">
+                Expenses
+            </a>
+            <a href="/savings">
+                Savings
+            </a>
         </nav>
     );
 }
