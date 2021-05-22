@@ -8,8 +8,9 @@ const savingsSchema = new Schema({
     timeframe: {
         week: Number,
         month: Number,
-        Year: Number,
+        year: Number,
     },
+    user_id: String,
 });
 
 const Saving = mongoose.model("Saving", savingsSchema);

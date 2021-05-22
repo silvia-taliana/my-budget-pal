@@ -25,5 +25,10 @@ function getSavingsById(user_id) {
     return axios.get(`/api/savings/${user_id}`);
 }
 
-const getBudgetData = { getExpenses, getExpensesById, createExpense, getSavings, getSavingsById };
+// Creates a new savings goal
+function createSaving(savingData) {
+    return axios.post("/api/savings", savingData);
+}
+
+const getBudgetData = { getExpenses, getExpensesById, createExpense, getSavings, getSavingsById, createSaving };
 export default getBudgetData;

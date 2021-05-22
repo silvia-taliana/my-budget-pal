@@ -4,7 +4,7 @@ const savingsController = require("../../controllers/savingsController");
 // Matches with "/api/savings"
 router.route("/")
     .get(savingsController.findAll)
-// .post(savingsController.create);
+    .post(savingsController.create);
 
 // Matches with "/api/savings/:id"
 router

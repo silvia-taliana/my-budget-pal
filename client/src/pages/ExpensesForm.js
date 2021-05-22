@@ -31,7 +31,7 @@ const options = [
 ];
 
 function ExpensesForm() {
-    // const [expense, setExpenses] = useState([]);
+    // setting state for expenses
     const [items, setItems] = useState({});
 
     // getting user information
