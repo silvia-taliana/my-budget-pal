@@ -7,9 +7,9 @@ router.route("/")
 // .post(savingsController.create);
 
 // Matches with "/api/savings/:id"
-// router
-//     .route("/:id")
-//     .get(savingsController.findById)
+router
+    .route("/:id")
+    .get(savingsController.find)
 //     .put(savingsController.update)
 //     .delete(savingsController.remove);
 

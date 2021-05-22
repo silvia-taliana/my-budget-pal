@@ -19,6 +19,8 @@ function Homepage() {
 
     const [userexpense, setUserExpenses] = useState([""]);
     const [useritems, setUserItems] = useState([]);
+    const [usersaving, setUserSavings] = useState([""]);
+    const [usergoals, setUserGoals] = useState([]);
 
     // getting data from the api to display on screen
     useEffect(() => {
@@ -44,6 +46,14 @@ function Homepage() {
             })
             .catch(err => console.log(err));
     }, [saving]);
+
+    useEffect(() => {
+        API.getSavingsById(user.sub)
+            .then(res => {
+                setUserGoals(res.data);
+            })
+            .catch(err => console.log(err));
+    }, [usersaving]);
 
     // rendering html on to screen providing user is authenticated
     return (
@@ -76,6 +86,15 @@ function Homepage() {
                     return <pre key={goal._id}>{JSON.stringify(goal)}</pre>
                 }))}>Testing Savings</button>
                 <h3>{saving}</h3>
+
+
+                <h2>Savings List by user</h2>
+                <button onClick={() => setUserSavings("testing")}>Testing User Savings</button>
+
+                <h3>{userexpense}</h3>
+                {usergoals.map(usergoal => {
+                    return <pre key={usergoal._id}>{JSON.stringify(usergoal)}</pre>
+                })}
 
                 {/* <Piechart /> */}
             </div>

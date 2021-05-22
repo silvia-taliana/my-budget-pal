@@ -15,5 +15,10 @@ function getSavings() {
     return axios.get("/api/savings");
 }
 
-const getBudgetData = { getExpenses, getExpensesById, getSavings };
+// Gets savings by user id
+function getSavingsById(user_id) {
+    return axios.get(`/api/savings/${user_id}`);
+}
+
+const getBudgetData = { getExpenses, getExpensesById, getSavings, getSavingsById };
 export default getBudgetData;

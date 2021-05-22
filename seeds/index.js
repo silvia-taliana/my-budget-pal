@@ -43,6 +43,7 @@ const savingData = [
             month: 3,
             year: 1,
         },
+        user_id: "google-oauth2|105678671351572796457",
     },
     {
         goal: 'new car',
@@ -52,6 +53,7 @@ const savingData = [
             month: 0,
             year: 2,
         },
+        user_id: "google-oauth2|105678671351572796457",
     },
     {
         goal: 'gucci bag',
@@ -61,6 +63,7 @@ const savingData = [
             month: 4,
             year: 0,
         },
+        user_id: "google-oauth2|105678671351572796457",
     },
     {
         goal: 'video game',
@@ -70,6 +73,7 @@ const savingData = [
             month: 0,
             year: 0,
         },
+        user_id: "",
     },
 ];
 
