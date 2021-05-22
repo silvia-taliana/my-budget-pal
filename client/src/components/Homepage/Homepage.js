@@ -10,8 +10,6 @@ function Homepage() {
 
     // user information
     const { user, isAuthenticated } = useAuth0();
-    // let user_id = user.sub;
-    // console.log(user.sub);
 
     // setting state 
     const [expense, setExpenses] = useState([""]);
@@ -22,7 +20,7 @@ function Homepage() {
     const [userexpense, setUserExpenses] = useState([""]);
     const [useritems, setUserItems] = useState([]);
 
-    // functions to update state when buttons are clicked below
+    // getting data from the api to display on screen
     useEffect(() => {
         API.getExpenses()
             .then(res => {
@@ -60,8 +58,7 @@ function Homepage() {
 
                 <h2>Expenses List</h2>
                 <button onClick={() => setExpenses(items.map(item => {
-                    console.log(item._id);
-                    return <pre key="item._id">{JSON.stringify(item)}</pre>
+                    return <pre key={item._id}>{JSON.stringify(item)}</pre>
                 }))}>Testing Expenses</button>
 
                 <h3>{expense}</h3>
@@ -71,12 +68,12 @@ function Homepage() {
 
                 <h3>{userexpense}</h3>
                 {useritems.map(useritem => {
-                    return <pre>{JSON.stringify(useritem)}</pre>
+                    return <pre key={useritem._id}>{JSON.stringify(useritem)}</pre>
                 })}
 
                 <h2>Savings List</h2>
                 <button onClick={() => setSavings(goals.map(goal => {
-                    return <pre key="goal._id">{JSON.stringify(goal)}</pre>
+                    return <pre key={goal._id}>{JSON.stringify(goal)}</pre>
                 }))}>Testing Savings</button>
                 <h3>{saving}</h3>
 
