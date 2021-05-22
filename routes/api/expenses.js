@@ -4,7 +4,7 @@ const expensesController = require("../../controllers/expensesController");
 // Matches with "/api/expenses"
 router.route("/")
     .get(expensesController.findAll)
-// .post(expensesController.create);
+    .post(expensesController.create);
 
 // Matches with "/api/expenses/:id"
 router
