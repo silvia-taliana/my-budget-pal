@@ -12,40 +12,17 @@ function Homepage() {
     const { user, isAuthenticated } = useAuth0();
 
     // setting state 
-    const [expense, setExpenses] = useState([""]);
-    const [items, setItems] = useState([]);
-    const [saving, setSavings] = useState([""]);
-    const [goals, setGoals] = useState([]);
-
-    const [userexpense, setUserExpenses] = useState([""]);
     const [useritems, setUserItems] = useState([]);
-    const [usersaving, setUserSavings] = useState([""]);
     const [usergoals, setUserGoals] = useState([]);
 
-    // getting data from the api to display on screen
-    useEffect(() => {
-        API.getExpenses()
-            .then(res => {
-                setItems(res.data);
-            })
-            .catch(err => console.log(err + "hope this doesnt work"));
-    }, [expense]);
-
+    // getting data from the api to display on screen specific to user only
     useEffect(() => {
         API.getExpensesById(user.sub)
             .then(res => {
                 setUserItems(res.data);
             })
             .catch(err => console.log(err));
-    }, [userexpense]);
-
-    useEffect(() => {
-        API.getSavings()
-            .then(res => {
-                setGoals(res.data);
-            })
-            .catch(err => console.log(err));
-    }, [saving]);
+    }, []);
 
     useEffect(() => {
         API.getSavingsById(user.sub)
@@ -53,7 +30,7 @@ function Homepage() {
                 setUserGoals(res.data);
             })
             .catch(err => console.log(err));
-    }, [usersaving]);
+    }, []);
 
     // rendering html on to screen providing user is authenticated
     return (
@@ -66,32 +43,12 @@ function Homepage() {
                     Logout
             </button>
 
-                <h2>Expenses List</h2>
-                <button onClick={() => setExpenses(items.map(item => {
-                    return <pre key={item._id}>{JSON.stringify(item)}</pre>
-                }))}>Testing Expenses</button>
-
-                <h3>{expense}</h3>
-
                 <h2>Expenses List by user</h2>
-                <button onClick={() => setUserExpenses("testing")}>Testing User Expenses</button>
-
-                <h3>{userexpense}</h3>
                 {useritems.map(useritem => {
                     return <pre key={useritem._id}>{JSON.stringify(useritem)}</pre>
                 })}
 
                 <h2>Savings List</h2>
-                <button onClick={() => setSavings(goals.map(goal => {
-                    return <pre key={goal._id}>{JSON.stringify(goal)}</pre>
-                }))}>Testing Savings</button>
-                <h3>{saving}</h3>
-
-
-                <h2>Savings List by user</h2>
-                <button onClick={() => setUserSavings("testing")}>Testing User Savings</button>
-
-                <h3>{userexpense}</h3>
                 {usergoals.map(usergoal => {
                     return <pre key={usergoal._id}>{JSON.stringify(usergoal)}</pre>
                 })}
