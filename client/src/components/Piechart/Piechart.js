@@ -1,12 +1,18 @@
 import React from "react";
 import { PieChart, Pie, Cell, Legend } from 'recharts';
 
-function renderPiechart() {
+function renderPiechart(props) {
+    console.log(props.userExpenses);
+    props.userExpenses.map(expense => {
+        console.log(expense.type);
+        console.log(expense.amount);
+    })
 
     const data = [
         { name: 'Food', value: 300 },
         { name: 'Bills', value: 500 },
         { name: 'Commute', value: 100 },
+        { name: 'Other', value: 100 },
         { name: 'Spending', value: 400 },
         { name: 'Saving', value: 200 },
     ];

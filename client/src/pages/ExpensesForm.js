@@ -1,9 +1,33 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import API from "../utils/API"
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+// setting up array of options for categories
+const catOptions = [
+    {
+        label: "Please select",
+        value: "invalid",
+    },
+    {
+        label: "Food",
+        value: "food",
+    },
+    {
+        label: "Bills",
+        value: "bills",
+    },
+    {
+        label: "Commute",
+        value: "commute",
+    },
+    {
+        label: "Other",
+        value: "other",
+    }
+];
 
 // setting up array of options for frequency
-const options = [
+const freqOptions = [
     {
         label: "Please select",
         value: "invalid",
@@ -33,6 +57,7 @@ const options = [
 function ExpensesForm() {
     // setting state for expenses
     const [items, setItems] = useState({});
+    const [useritems, setUserItems] = useState([]);
 
     // defining variable for user id
     let userId = "";
@@ -75,11 +100,12 @@ function ExpensesForm() {
         event.preventDefault();
         const checkAuth = await getAuth();
         try {
-            if (!items.frequency || items.frequency === "invalid") {
+            if (!items.frequency || items.frequency === "invalid" || !items.category || items.category === "invalid") {
                 console.log("not allowed");
-            } else if (checkAuth === "Authorized" && items.type && items.amount && items.frequency) {
+            } else if (checkAuth === "Authorized" && items.type && items.category && items.amount && items.frequency) {
                 API.createExpense({
                     type: items.type,
+                    category: items.category,
                     amount: items.amount,
                     frequency: items.frequency,
                     user_id: userId,
@@ -94,16 +120,31 @@ function ExpensesForm() {
         }
     }
 
+    // getting data from the api to display on screen specific to user only
+    useEffect(() => {
+        API.getExpensesById(user.sub)
+            .then(res => {
+                setUserItems(res.data);
+            })
+            .catch(err => console.log(err));
+    }, []);
+
     // returning html
     return (
         <div>
-            <h1>Expenses</h1>
+            <h1>Add Expenses</h1>
             <form>
                 <label>Expense type:</label>
                 <input
                     onChange={handleInputChange}
                     name="type"
                     placeholder="e.g. Elictricity bill"></input>
+                <label>Category:</label>
+                <select name="category" value={items.category} onChange={handleInputChange}>
+                    {catOptions.map((option) => (
+                        <option key={option.value} value={option.value}>{option.label}</option>
+                    ))}
+                </select>
                 <label>Amount:</label>
                 <input
                     onChange={handleInputChange}
@@ -111,13 +152,21 @@ function ExpensesForm() {
                     placeholder="$"></input>
                 <label>Frequency:</label>
                 <select name="frequency" value={items.frequency} onChange={handleInputChange}>
-                    {options.map((option) => (
-                        <option value={option.value}>{option.label}</option>
+                    {freqOptions.map((option) => (
+                        <option key={option.value} value={option.value}>{option.label}</option>
                     ))}
                 </select>
                 <button onClick={addExpenseFormHandler}>Add Expense</button>
                 <button>Finish</button>
             </form>
+
+            <h2>Expenses List</h2>
+            <ul>
+                {useritems.map(useritem => {
+                    return <li key={useritem._id}>{useritem.type} | {useritem.amount} | {useritem.category}</li>
+                })}
+            </ul>
+
         </div>
     );
 }

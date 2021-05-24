@@ -10,24 +10,28 @@ mongoose.connect(
 const expenseData = [
     {
         type: 'mortgage',
+        category: 'bills',
         amount: 300,
         frequency: "fortnightly",
         user_id: "google-oauth2|105678671351572796457",
     },
     {
         type: 'electricity bill',
+        category: 'bills',
         amount: 400,
         frequency: "quaterly",
         user_id: "google-oauth2|105678671351572796457",
     },
     {
         type: 'gas bill',
+        category: 'bills',
         amount: 120,
         frequency: "quaterly",
         user_id: "",
     },
     {
         type: 'water bill',
+        category: 'bills',
         amount: 200,
         frequency: "quaterly",
         user_id: "",

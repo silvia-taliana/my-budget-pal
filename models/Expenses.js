@@ -4,8 +4,9 @@ const Schema = mongoose.Schema;
 // setting up schema for expenses data 
 const expensesSchema = new Schema({
     type: { type: String, required: true },
+    category: { type: String, required: true },
     amount: { type: Number, required: true },
-    frequency: String,
+    frequency: { type: String, required: true },
     user_id: String,
 });
 
