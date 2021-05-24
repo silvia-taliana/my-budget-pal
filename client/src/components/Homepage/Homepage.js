@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import API from "../../utils/API";
+import Piechart from "../Piechart/Piechart";
 // import Expense from "../components/Expense/Expense";
 // import Saving from "../Saving/Saving";
 import { useAuth0 } from '@auth0/auth0-react';
@@ -44,6 +45,8 @@ function Homepage() {
             </button>
 
                 <h2>Expenses List by user</h2>
+                <Piechart />
+
                 {useritems.map(useritem => {
                     return <pre key={useritem._id}>{JSON.stringify(useritem)}</pre>
                 })}
@@ -53,7 +56,6 @@ function Homepage() {
                     return <pre key={usergoal._id}>{JSON.stringify(usergoal)}</pre>
                 })}
 
-                {/* <Piechart /> */}
             </div>
         )
     );
