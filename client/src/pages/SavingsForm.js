@@ -6,8 +6,11 @@ function SavingsForm() {
     // setting state for saving goals
     const [goals, setGoals] = useState({});
 
+    // defining variable for user id
+    let userId = "";
+
     // getting user information
-    const { user } = useAuth0();
+    const { user, getAccessTokenSilently } = useAuth0();
 
     // handling form input 
     function handleInputChange(event) {
@@ -15,24 +18,55 @@ function SavingsForm() {
         setGoals({ ...goals, [name]: value })
     };
 
-    // function to submit form on click
+    // getting access token if user is logged in
+    const getAuthToken = async () => {
+        if (!user) {
+            return null;
+        }
+        return getAccessTokenSilently({});
+    };
+
+    // authorizing access token and getting user id from token
+    const getAuth = async () => {
+        const token = await getAuthToken();
+        try {
+            const response = await fetch("/api/withAuth", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }).then((res) => res.json());
+            userId = response.user.sub;
+            return "Authorized";
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    // function to submit form on click only if user is authorized
     const addSavingFormHandler = async (event) => {
         event.preventDefault();
-        console.log(goals.year);
-        if (!goals.goal || !goals.amount) {
-            console.log("not allowed");
-        } else {
-            API.createSaving({
-                goal: goals.goal,
-                amount: goals.amount,
-                timeframe: {
-                    week: goals.week,
-                    month: goals.month,
-                    year: goals.year,
-                },
-                user_id: user.sub,
-            }).then(console.log("saving goal added!"))
-                .catch(err => console.log(err));
+        const checkAuth = await getAuth();
+        try {
+            console.log(checkAuth);
+            if (!goals.goal || !goals.amount) {
+                console.log("Please enter data");
+            } else if (checkAuth === "Authorized") {
+                API.createSaving({
+                    goal: goals.goal,
+                    amount: goals.amount,
+                    timeframe: {
+                        week: goals.week,
+                        month: goals.month,
+                        year: goals.year,
+                    },
+                    user_id: userId,
+                }).then(console.log("saving goal added!"))
+                    .catch(err => console.log(err));
+            } else {
+                console.log("You are not authorized")
+            }
+        } catch (err) {
+            console.log(err);
         }
     }
 

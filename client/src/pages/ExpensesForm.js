@@ -33,7 +33,9 @@ const options = [
 function ExpensesForm() {
     // setting state for expenses
     const [items, setItems] = useState({});
-    const [userId, setUserId] = useState("");
+
+    // defining variable for user id
+    let userId = "";
 
     // getting user information
     const { user, getAccessTokenSilently } = useAuth0();
@@ -61,7 +63,7 @@ function ExpensesForm() {
                     Authorization: `Bearer ${token}`,
                 },
             }).then((res) => res.json());
-            setUserId(response.user.sub);
+            userId = response.user.sub;
             return "Authorized";
         } catch (err) {
             console.log(err);
