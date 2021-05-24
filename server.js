@@ -8,7 +8,6 @@ const PORT = process.env.API_PORT || 3001;
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
 require("dotenv").config();
-const fetch = require('node-fetch');
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -30,29 +29,9 @@ const checkJwt = jwt({
     algorithms: ['RS256'],
 });
 
-// test route - getting information that doesnt require authorization
-app.get("/api/noAuth", (req, res) => {
-    console.log("we hit the no auth route woooo!");
-    // res.send({ msg: "the no auth button worked!" });
-    res.json({ result: "Response Success" });
-});
-
-// test route - getting information requiring authorization
+// getting information requiring authorization
 app.get("/api/withAuth", checkJwt, (req, res) => {
-    console.log(req.user);
-    // res.send({ msg: "the auth button worked!" });
     res.json({ result: "Authed successfully", user: req.user });
-});
-
-// test route - getting user information with authorization 
-app.get("/api/user", checkJwt, async (req, res) => {
-    console.log("made it this far");
-    const result = await fetch(`${process.env.AUTH0_DOMAIN}userinfo`, {
-        headers: { Authorization: req.headers.authorization }
-    }).then(res => res.json());
-    console.log(result);
-    // res.send({ msg: "the get user button worked!" });
-    res.json({ result: "Authed successfully", userInfo: result });
 });
 
 // Add routes, both API and view
