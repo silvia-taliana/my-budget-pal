@@ -28,7 +28,7 @@ function Homepage() {
             .then(res => {
                 setItems(res.data);
             })
-            .catch(err => console.log(err));
+            .catch(err => console.log(err + "hope this doesnt work"));
     }, [expense]);
 
     useEffect(() => {

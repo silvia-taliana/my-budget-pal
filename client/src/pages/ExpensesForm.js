@@ -33,9 +33,10 @@ const options = [
 function ExpensesForm() {
     // setting state for expenses
     const [items, setItems] = useState({});
+    const [userId, setUserId] = useState("");
 
     // getting user information
-    const { user } = useAuth0();
+    const { user, getAccessTokenSilently } = useAuth0();
 
     // handling form input 
     function handleInputChange(event) {
@@ -43,22 +44,51 @@ function ExpensesForm() {
         setItems({ ...items, [name]: value })
     };
 
-    // function to submit form on click
+    // getting access token if user is logged in
+    const getAuthToken = async () => {
+        if (!user) {
+            return null;
+        }
+        return getAccessTokenSilently({});
+    };
+
+    // authorizing access token and getting user id from token
+    const getAuth = async () => {
+        const token = await getAuthToken();
+        try {
+            const response = await fetch("/api/withAuth", {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }).then((res) => res.json());
+            setUserId(response.user.sub);
+            return "Authorized";
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    // function to submit form on click only if user is authorized
     const addExpenseFormHandler = async (event) => {
         event.preventDefault();
-        if (!items.frequency || items.frequency === "invalid") {
-            console.log("not allowed");
-        } else if (items.type && items.amount && items.frequency) {
-            API.createExpense({
-                type: items.type,
-                amount: items.amount,
-                frequency: items.frequency,
-                user_id: user.sub,
-            }).then(console.log("expense added!"))
-                .catch(err => console.log(err));
-        }
-        else {
-            console.log("please enter data")
+        const checkAuth = await getAuth();
+        try {
+            if (!items.frequency || items.frequency === "invalid") {
+                console.log("not allowed");
+            } else if (checkAuth === "Authorized" && items.type && items.amount && items.frequency) {
+                API.createExpense({
+                    type: items.type,
+                    amount: items.amount,
+                    frequency: items.frequency,
+                    user_id: userId,
+                }).then(console.log("expense added!"))
+                    .catch(err => console.log(err));
+            }
+            else {
+                console.log("please enter data")
+            }
+        } catch (err) {
+            console.log(err);
         }
     }
 
