@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth0 } from '@auth0/auth0-react';
 import API from "../utils/API"
 
 function SavingsForm() {
     // setting state for saving goals
     const [goals, setGoals] = useState({});
+    const [usergoals, setUserGoals] = useState([]);
 
     // defining variable for user id
     let userId = "";
@@ -70,6 +71,15 @@ function SavingsForm() {
         }
     }
 
+    // getting data from the api to display on screen specific to user only
+    useEffect(() => {
+        API.getSavingsById(user.sub)
+            .then(res => {
+                setUserGoals(res.data);
+            })
+            .catch(err => console.log(err));
+    }, []);
+
     // returning html
     return (
         <div>
@@ -99,8 +109,30 @@ function SavingsForm() {
                     name="year"
                     placeholder="0"></input><label>Year(s)</label>
                 <button onClick={addSavingFormHandler}>Add Goal</button>
-                <button>Finish</button>
             </form>
+
+            <h2>Savings List</h2>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Goal</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Timeframe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {usergoals.map(usergoal => {
+                        return (
+                            <tr>
+                                <td key={usergoal._id} scope="row">{usergoal.goal} </td>
+                                <td>{usergoal.amount}</td>
+                                <td>{usergoal.timeframe.week}w + {usergoal.timeframe.month}m + {usergoal.timeframe.year}y</td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
         </div>
     );
 }

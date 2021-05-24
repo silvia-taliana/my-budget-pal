@@ -157,16 +157,32 @@ function ExpensesForm() {
                     ))}
                 </select>
                 <button onClick={addExpenseFormHandler}>Add Expense</button>
-                <button>Finish</button>
             </form>
 
             <h2>Expenses List</h2>
-            <ul>
-                {useritems.map(useritem => {
-                    return <li key={useritem._id}>{useritem.type} | {useritem.amount} | {useritem.category}</li>
-                })}
-            </ul>
 
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Type</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Frequency</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {useritems.map(useritem => {
+                        return (
+                            <tr>
+                                <td key={useritem._id} scope="row">{useritem.type} </td>
+                                <td>{useritem.category}</td>
+                                <td>{useritem.amount}</td>
+                                <td>{useritem.frequency}</td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
         </div>
     );
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import API from "../../utils/API";
 import Piechart from "../Piechart/Piechart";
+import Linechart from "../Linechart/Linechart";
 import { useAuth0 } from '@auth0/auth0-react';
 
 function Homepage() {
@@ -42,13 +43,11 @@ function Homepage() {
                     Logout
             </button>
 
-                <h2>Expenses List by user</h2>
+                <h2>Expenses</h2>
                 <Piechart userExpenses={useritems} />
 
-                <h2>Savings List</h2>
-                {usergoals.map(usergoal => {
-                    return <pre key={usergoal._id}>{JSON.stringify(usergoal)}</pre>
-                })}
+                <h2>Savings</h2>
+                <Linechart userGoals={usergoals} />
 
             </div>
         )
