@@ -61,7 +61,7 @@ function SavingsForm() {
                         year: goals.year,
                     },
                     user_id: userId,
-                }).then(console.log("saving goal added!"))
+                }).then(console.log("saving goal added!"), clearForm())
                     .catch(err => console.log(err));
             } else {
                 console.log("You are not authorized")
@@ -69,6 +69,10 @@ function SavingsForm() {
         } catch (err) {
             console.log(err);
         }
+    }
+
+    const clearForm = () => {
+        document.getElementById("savingsForm").reset();
     }
 
     // getting data from the api to display on screen specific to user only
@@ -84,7 +88,7 @@ function SavingsForm() {
     return (
         <div>
             <h1>Savings</h1>
-            <form>
+            <form id="savingsForm">
                 <label>Saving Goal:</label>
                 <input
                     onChange={handleInputChange}

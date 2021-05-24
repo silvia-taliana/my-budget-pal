@@ -109,7 +109,7 @@ function ExpensesForm() {
                     amount: items.amount,
                     frequency: items.frequency,
                     user_id: userId,
-                }).then(console.log("expense added!"))
+                }).then(console.log("expense added!"), clearForm())
                     .catch(err => console.log(err));
             }
             else {
@@ -118,6 +118,11 @@ function ExpensesForm() {
         } catch (err) {
             console.log(err);
         }
+    }
+
+    // function to clear form input 
+    const clearForm = () => {
+        document.getElementById("expensesForm").reset();
     }
 
     // getting data from the api to display on screen specific to user only
@@ -133,7 +138,7 @@ function ExpensesForm() {
     return (
         <div>
             <h1>Add Expenses</h1>
-            <form>
+            <form id="expensesForm">
                 <label>Expense type:</label>
                 <input
                     onChange={handleInputChange}
