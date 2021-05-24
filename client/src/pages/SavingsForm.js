@@ -78,7 +78,7 @@ function SavingsForm() {
                 setUserGoals(res.data);
             })
             .catch(err => console.log(err));
-    }, []);
+    }, [user.sub, usergoals]);
 
     // returning html
     return (
@@ -113,7 +113,7 @@ function SavingsForm() {
 
             <h2>Savings List</h2>
 
-            <table class="table">
+            <table className="table">
                 <thead>
                     <tr>
                         <th scope="col">Goal</th>
@@ -124,8 +124,8 @@ function SavingsForm() {
                 <tbody>
                     {usergoals.map(usergoal => {
                         return (
-                            <tr>
-                                <td key={usergoal._id} scope="row">{usergoal.goal} </td>
+                            <tr key={usergoal._id} >
+                                <th scope="row">{usergoal.goal} </th>
                                 <td>{usergoal.amount}</td>
                                 <td>{usergoal.timeframe.week}w + {usergoal.timeframe.month}m + {usergoal.timeframe.year}y</td>
                             </tr>

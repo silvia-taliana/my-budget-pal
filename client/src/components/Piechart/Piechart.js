@@ -3,10 +3,10 @@ import { PieChart, Pie, Cell, Legend } from 'recharts';
 
 function renderPiechart(props) {
     console.log(props.userExpenses);
-    props.userExpenses.map(expense => {
-        console.log(expense.type);
-        console.log(expense.amount);
-    })
+    // props.userExpenses.map(expense => {
+    //     console.log(expense.type);
+    //     console.log(expense.amount);
+    // })
 
     const data = [
         { name: 'Food', value: 300 },

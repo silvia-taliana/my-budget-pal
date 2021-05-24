@@ -22,7 +22,7 @@ function Homepage() {
                 setUserItems(res.data);
             })
             .catch(err => console.log(err));
-    }, []);
+    }, [user.sub]);
 
     useEffect(() => {
         API.getSavingsById(user.sub)
@@ -30,7 +30,7 @@ function Homepage() {
                 setUserGoals(res.data);
             })
             .catch(err => console.log(err));
-    }, []);
+    }, [user.sub]);
 
     // rendering html on to screen providing user is authenticated
     return (

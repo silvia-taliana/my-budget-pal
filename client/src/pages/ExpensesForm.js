@@ -127,7 +127,7 @@ function ExpensesForm() {
                 setUserItems(res.data);
             })
             .catch(err => console.log(err));
-    }, []);
+    }, [user.sub, useritems]);
 
     // returning html
     return (
@@ -161,7 +161,7 @@ function ExpensesForm() {
 
             <h2>Expenses List</h2>
 
-            <table class="table">
+            <table className="table">
                 <thead>
                     <tr>
                         <th scope="col">Type</th>
@@ -173,8 +173,8 @@ function ExpensesForm() {
                 <tbody>
                     {useritems.map(useritem => {
                         return (
-                            <tr>
-                                <td key={useritem._id} scope="row">{useritem.type} </td>
+                            <tr key={useritem._id}>
+                                <th scope="row">{useritem.type} </th>
                                 <td>{useritem.category}</td>
                                 <td>{useritem.amount}</td>
                                 <td>{useritem.frequency}</td>
