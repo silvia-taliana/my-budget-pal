@@ -7,6 +7,7 @@ import API from "../../utils/API"
 function RenderPiechart(props) {
     // setting state for income
     const [userincome, setUserIncome] = useState([]);
+    const [savingGoal, setSavingGoal] = useState([]);
     const [data, setData] = useState([
         { name: 'Food', value: 0 },
         { name: 'Bills', value: 0 },
@@ -37,13 +38,15 @@ function RenderPiechart(props) {
             return expenseMap[expense.category] += expense.amount;
         });
 
-        expenseMap.spending = userincome - totalExpenses;
+        expenseMap.spending = (userincome - totalExpenses) - savingGoal;
+        expenseMap.saving = savingGoal;
 
         const piechartData = Object.entries(expenseMap).map((value) => {
             return { name: value[0], value: value[1] }
         });
 
         setData(piechartData);
+        console.log(piechartData);
     }
 
     // getting income data
@@ -51,10 +54,11 @@ function RenderPiechart(props) {
         API.getIncomeById(user.sub)
             .then(res => {
                 setUserIncome(res.data[0].income);
+                setSavingGoal(res.data[0].totalSaving);
                 calculatePieChart();
             })
             .catch(err => console.log(err));
-    }, [user.sub, props.userExpenses, calculatePieChart]);
+    }, [user.sub, props.userExpenses]);
 
     // setting up pie chart
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4021'];
