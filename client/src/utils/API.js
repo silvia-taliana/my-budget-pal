@@ -20,5 +20,15 @@ function createSaving(savingData) {
     return axios.post("/api/savings", savingData);
 }
 
-const getBudgetData = { getExpensesById, createExpense, getSavingsById, createSaving };
+// Get income by user id
+function getIncomeById(user_id) {
+    return axios.get(`/api/income/${user_id}`);
+}
+
+// Creates a new income
+function createIncome(incomeData) {
+    return axios.post("/api/income", incomeData);
+}
+
+const getBudgetData = { getExpensesById, createExpense, getSavingsById, createSaving, getIncomeById, createIncome };
 export default getBudgetData;
