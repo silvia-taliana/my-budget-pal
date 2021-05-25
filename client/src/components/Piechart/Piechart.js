@@ -2,11 +2,35 @@ import React from "react";
 import { PieChart, Pie, Cell, Legend } from 'recharts';
 
 function renderPiechart(props) {
-    console.log(props.userExpenses);
-    // props.userExpenses.map(expense => {
-    //     console.log(expense.type);
-    //     console.log(expense.amount);
-    // })
+
+    let chartArray = [
+        { name: 'Food', value: 0 },
+        { name: 'Bills', value: 0 },
+        { name: 'Commute', value: 0 },
+        { name: 'Other', value: 0 },
+        { name: 'Spending', value: 0 },
+        { name: 'Saving', value: 0 }
+    ];
+
+    function getData() {
+        props.userExpenses.map(expense => {
+            if (expense.category === "food") {
+                let objInd = chartArray.findIndex((obj => obj.name === "Food"));
+                console.log("before update: ", chartArray[objInd]);
+                chartArray[objInd].value = addValues(chartArray[objInd].value, expense.amount);
+                console.log("after update: ", chartArray[objInd]);
+                return chartArray;
+            }
+            console.log(chartArray);
+            return chartArray;
+        })
+    }
+
+    function addValues(a, b) {
+        return a + b;
+    }
+
+    getData();
 
     const data = [
         { name: 'Food', value: 300 },

@@ -71,6 +71,7 @@ function SavingsForm() {
         }
     }
 
+    // function to clear form input 
     const clearForm = () => {
         document.getElementById("savingsForm").reset();
     }
