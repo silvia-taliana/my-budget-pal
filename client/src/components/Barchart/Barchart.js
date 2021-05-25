@@ -1,30 +1,21 @@
 import React from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-const data = [
-    {
-        name: 'New Bag',
-        Goal: 200,
-        Saved: 100,
-    },
-    {
-        name: 'Holiday',
-        Goal: 6000,
-        Saved: 1000,
-    },
-    {
-        name: 'Diamond Ring',
-        Goal: 4000,
-        Saved: 2400,
-    },
-    {
-        name: 'Car',
-        Goal: 7000,
-        Saved: 2000,
-    },
-];
+function renderBarchart(props) {
 
-function renderBarchart() {
+    // setting up array for bar chart values
+    let data = [];
+
+    function addGoal() {
+        let saved = 500;
+        props.userGoals.map(goal => {
+            data.push({ name: goal.goal, Goal: goal.amount - saved, Saved: saved });
+            return data;
+        })
+    }
+
+    addGoal();
+
     return (
         <BarChart
             width={500}

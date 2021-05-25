@@ -40,7 +40,6 @@ function renderPiechart(props) {
                 return data;
             }
         })
-        console.log(data);
     }
 
     // function to add values
