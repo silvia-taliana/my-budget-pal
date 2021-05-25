@@ -1,54 +1,60 @@
-import React from "react";
+// import React from "react";
+import React, { useState, useEffect } from "react";
 import { PieChart, Pie, Cell, Legend } from 'recharts';
+import { useAuth0 } from '@auth0/auth0-react';
+import API from "../../utils/API"
 
-function renderPiechart(props) {
+function RenderPiechart(props) {
+    // setting state for income
+    const [userincome, setUserIncome] = useState([]);
+    const [data, setData] = useState([
+        { name: 'Food', value: 0 },
+        { name: 'Bills', value: 0 },
+        { name: 'Commute', value: 0 },
+        { name: 'Other', value: 0 },
+        { name: 'Spending', value: 0 },
+        { name: 'Saving', value: 0 }
+    ])
 
-    // setting up array for pie chart values (TEMPORARY NUMBERS!!)
-    let data = [
-        { name: 'Food', value: 100 },
-        { name: 'Bills', value: 100 },
-        { name: 'Commute', value: 100 },
-        { name: 'Other', value: 100 },
-        { name: 'Spending', value: 100 },
-        { name: 'Saving', value: 100 }
-    ];
+    // getting user information
+    const { user } = useAuth0();
 
-    // getting amount value for each expense and updating associated category in pie chart data
-    function getData() {
+    // function to render pie chart data
+    const calculatePieChart = () => {
+        let expenseMap = {
+            food: 0,
+            bills: 0,
+            commute: 0,
+            other: 0,
+            spending: 0,
+            saving: 0
+        };
+
+        let totalExpenses = 0;
+
         props.userExpenses.map(expense => {
-            if (expense.category === "food") {
-                let objInd = data.findIndex((obj => obj.name === "Food"));
-                data[objInd].value = addValues(data[objInd].value, expense.amount);
-                return data;
-            }
-            else if (expense.category === "bills") {
-                let objInd = data.findIndex((obj => obj.name === "Bills"));
-                data[objInd].value = addValues(data[objInd].value, expense.amount);
-                return data;
-            }
-            else if (expense.category === "commute") {
-                let objInd = data.findIndex((obj => obj.name === "Commute"));
-                data[objInd].value = addValues(data[objInd].value, expense.amount);
-                return data;
-            }
-            else if (expense.category === "other") {
-                let objInd = data.findIndex((obj => obj.name === "Other"));
-                data[objInd].value = addValues(data[objInd].value, expense.amount);
-                return data;
-            }
-            else {
-                return data;
-            }
-        })
+            totalExpenses += expense.amount;
+            return expenseMap[expense.category] += expense.amount;
+        });
+
+        expenseMap.spending = userincome - totalExpenses;
+
+        const piechartData = Object.entries(expenseMap).map((value) => {
+            return { name: value[0], value: value[1] }
+        });
+
+        setData(piechartData);
     }
 
-    // function to add values
-    function addValues(a, b) {
-        return a + b;
-    }
-
-    // starting function when page loads
-    getData();
+    // getting income data
+    useEffect(() => {
+        API.getIncomeById(user.sub)
+            .then(res => {
+                setUserIncome(res.data[0].income);
+                calculatePieChart();
+            })
+            .catch(err => console.log(err));
+    }, [user.sub, props.userExpenses, calculatePieChart]);
 
     // setting up pie chart
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4021'];
@@ -87,4 +93,4 @@ function renderPiechart(props) {
     )
 }
 
-export default renderPiechart;
+export default RenderPiechart;

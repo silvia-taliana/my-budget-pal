@@ -120,8 +120,14 @@ function Profile() {
                 <button onClick={addIncomeFormHandler}>Submit</button>
             </form>
 
+            <h2>Income:</h2>
             {userincome.map(income => {
-                return <p key={income._id}>{JSON.stringify(income)}</p>
+                return <p key={income._id}>${income.income} per {income.payCycle}</p>
+            })}
+
+            <h2>Saving goal:</h2>
+            {userincome.map(income => {
+                return <p key={income._id}>${income.totalSaving} per week</p>
             })}
         </div>
     );
