@@ -3,7 +3,7 @@ import { PieChart, Pie, Cell, Legend } from 'recharts';
 
 function renderPiechart(props) {
 
-    // setting up array for pie chart values
+    // setting up array for pie chart values (TEMPORARY NUMBERS!!)
     let data = [
         { name: 'Food', value: 100 },
         { name: 'Bills', value: 100 },

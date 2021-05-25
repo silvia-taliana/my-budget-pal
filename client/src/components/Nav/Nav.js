@@ -6,6 +6,9 @@ function Nav() {
             <a href="/">
                 Home
             </a>
+            <a href="/profile">
+                Profile
+            </a>
             <a href="/expenses">
                 Expenses
             </a>

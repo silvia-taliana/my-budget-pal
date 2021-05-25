@@ -1,4 +1,5 @@
 import React from "react";
+import Profile from "./pages/ProfilePage";
 import ExpensesForm from "./pages/ExpensesForm";
 import SavingsForm from "./pages/SavingsForm";
 // import NoMatch from "./pages/NoMatch";
@@ -23,6 +24,7 @@ function App() {
         <Nav />
         <Switch>
           <Route exact path="/" component={LandingPage} />
+          <PrivateRoute exact path="/profile" component={Profile} />
           <PrivateRoute exact path="/expenses" component={ExpensesForm} />
           <PrivateRoute exact path="/savings" component={SavingsForm} />
           {/* <Route path="*" component={NoMatch} /> */}
