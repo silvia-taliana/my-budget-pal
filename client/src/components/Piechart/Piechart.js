@@ -3,44 +3,55 @@ import { PieChart, Pie, Cell, Legend } from 'recharts';
 
 function renderPiechart(props) {
 
-    let chartArray = [
-        { name: 'Food', value: 0 },
-        { name: 'Bills', value: 0 },
-        { name: 'Commute', value: 0 },
-        { name: 'Other', value: 0 },
-        { name: 'Spending', value: 0 },
-        { name: 'Saving', value: 0 }
+    // setting up array for pie chart values
+    let data = [
+        { name: 'Food', value: 100 },
+        { name: 'Bills', value: 100 },
+        { name: 'Commute', value: 100 },
+        { name: 'Other', value: 100 },
+        { name: 'Spending', value: 100 },
+        { name: 'Saving', value: 100 }
     ];
 
+    // getting amount value for each expense and updating associated category in pie chart data
     function getData() {
         props.userExpenses.map(expense => {
             if (expense.category === "food") {
-                let objInd = chartArray.findIndex((obj => obj.name === "Food"));
-                console.log("before update: ", chartArray[objInd]);
-                chartArray[objInd].value = addValues(chartArray[objInd].value, expense.amount);
-                console.log("after update: ", chartArray[objInd]);
-                return chartArray;
+                let objInd = data.findIndex((obj => obj.name === "Food"));
+                data[objInd].value = addValues(data[objInd].value, expense.amount);
+                return data;
             }
-            console.log(chartArray);
-            return chartArray;
+            else if (expense.category === "bills") {
+                let objInd = data.findIndex((obj => obj.name === "Bills"));
+                data[objInd].value = addValues(data[objInd].value, expense.amount);
+                return data;
+            }
+            else if (expense.category === "commute") {
+                let objInd = data.findIndex((obj => obj.name === "Commute"));
+                data[objInd].value = addValues(data[objInd].value, expense.amount);
+                return data;
+            }
+            else if (expense.category === "other") {
+                let objInd = data.findIndex((obj => obj.name === "Other"));
+                data[objInd].value = addValues(data[objInd].value, expense.amount);
+                return data;
+            }
+            else {
+                return data;
+            }
         })
+        console.log(data);
     }
 
+    // function to add values
     function addValues(a, b) {
         return a + b;
     }
 
+    // starting function when page loads
     getData();
 
-    const data = [
-        { name: 'Food', value: 300 },
-        { name: 'Bills', value: 500 },
-        { name: 'Commute', value: 100 },
-        { name: 'Other', value: 100 },
-        { name: 'Spending', value: 400 },
-        { name: 'Saving', value: 200 },
-    ];
-
+    // setting up pie chart
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4021'];
 
     const RADIAN = Math.PI / 180;
