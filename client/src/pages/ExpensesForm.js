@@ -62,6 +62,9 @@ function ExpensesForm() {
     // defining variable for user id
     let userId = "";
 
+    // defining variable for weekly expense
+    let weeklyExpense = "";
+
     // getting user information
     const { user, getAccessTokenSilently } = useAuth0();
 
@@ -95,9 +98,33 @@ function ExpensesForm() {
         }
     };
 
+    // function to calculate weekly expense to get values for pie chart
+    function calcWeeklyExpenses() {
+        if (items.frequency === "fortnightly") {
+            let weekly = items.amount / 2;
+            return weeklyExpense = weekly;
+        }
+        else if (items.frequency === "monthly") {
+            let weekly = items.amount / 4;
+            return weeklyExpense = weekly;
+        }
+        else if (items.frequency === "quaterly") {
+            let weekly = items.amount / 12;
+            return weeklyExpense = weekly;
+        }
+        else if (items.frequency === "yearly") {
+            let weekly = items.amount / 52;
+            return weeklyExpense = weekly;
+        }
+        else {
+            return;
+        }
+    }
+
     // function to submit form on click only if user is authorized
     const addExpenseFormHandler = async (event) => {
         event.preventDefault();
+        calcWeeklyExpenses(items.frequency);
         const checkAuth = await getAuth();
         try {
             if (!items.frequency || items.frequency === "invalid" || !items.category || items.category === "invalid") {
@@ -109,6 +136,7 @@ function ExpensesForm() {
                     amount: items.amount,
                     frequency: items.frequency,
                     user_id: userId,
+                    weeklyExpense: weeklyExpense,
                 }).then(console.log("expense added!"), clearForm())
                     .catch(err => console.log(err));
             }

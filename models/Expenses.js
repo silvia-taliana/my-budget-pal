@@ -8,6 +8,7 @@ const expensesSchema = new Schema({
     amount: { type: Number, required: true },
     frequency: { type: String, required: true },
     user_id: String,
+    weeklyExpense: Number,
 });
 
 const Expense = mongoose.model("Expense", expensesSchema);
