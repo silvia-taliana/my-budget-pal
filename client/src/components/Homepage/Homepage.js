@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import API from "../../utils/API";
 import Piechart from "../Piechart/Piechart";
-import Linechart from "../Linechart/Linechart";
+import Barchart from "../Barchart/Barchart";
 import { useAuth0 } from '@auth0/auth0-react';
 
 function Homepage() {
@@ -47,7 +47,7 @@ function Homepage() {
                 <Piechart userExpenses={useritems} />
 
                 <h2>Savings</h2>
-                <Linechart userGoals={usergoals} />
+                <Barchart userGoals={usergoals} />
 
             </div>
         )
