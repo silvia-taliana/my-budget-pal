@@ -10,7 +10,7 @@ router.route("/")
 router
     .route("/:id")
     .get(expensesController.find)
-//     .put(expensesController.update)
-//     .delete(expensesController.remove);
+    //     .put(expensesController.update)
+    .delete(expensesController.remove);
 
 module.exports = router;

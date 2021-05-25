@@ -125,6 +125,13 @@ function ExpensesForm() {
         document.getElementById("expensesForm").reset();
     }
 
+    // function to delete expense by id
+    function deleteExpense(id) {
+        API.deleteExpense(id)
+            .then(res => console.log("expense deleted"))
+            .catch(err => console.log(err));
+    }
+
     // getting data from the api to display on screen specific to user only
     useEffect(() => {
         API.getExpensesById(user.sub)
@@ -173,6 +180,7 @@ function ExpensesForm() {
                         <th scope="col">Category</th>
                         <th scope="col">Amount</th>
                         <th scope="col">Frequency</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -183,6 +191,7 @@ function ExpensesForm() {
                                 <td>{useritem.category}</td>
                                 <td>{useritem.amount}</td>
                                 <td>{useritem.frequency}</td>
+                                <td><button onClick={() => deleteExpense(useritem._id)}>Delete</button></td>
                             </tr>
                         )
                     })}

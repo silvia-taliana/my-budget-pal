@@ -76,6 +76,13 @@ function SavingsForm() {
         document.getElementById("savingsForm").reset();
     }
 
+    // function to delete saving by id
+    function deleteSaving(id) {
+        API.deleteSaving(id)
+            .then(res => console.log("saving deleted"))
+            .catch(err => console.log(err));
+    }
+
     // getting data from the api to display on screen specific to user only
     useEffect(() => {
         API.getSavingsById(user.sub)
@@ -124,6 +131,7 @@ function SavingsForm() {
                         <th scope="col">Goal</th>
                         <th scope="col">Amount</th>
                         <th scope="col">Timeframe</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -133,6 +141,7 @@ function SavingsForm() {
                                 <th scope="row">{usergoal.goal} </th>
                                 <td>{usergoal.amount}</td>
                                 <td>{usergoal.timeframe.week}w + {usergoal.timeframe.month}m + {usergoal.timeframe.year}y</td>
+                                <td><button onClick={() => deleteSaving(usergoal._id)}>Delete</button></td>
                             </tr>
                         )
                     })}

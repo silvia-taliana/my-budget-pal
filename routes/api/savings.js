@@ -10,7 +10,7 @@ router.route("/")
 router
     .route("/:id")
     .get(savingsController.find)
-//     .put(savingsController.update)
-//     .delete(savingsController.remove);
+    //     .put(savingsController.update)
+    .delete(savingsController.remove);
 
 module.exports = router;
