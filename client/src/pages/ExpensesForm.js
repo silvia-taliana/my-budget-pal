@@ -117,7 +117,7 @@ function ExpensesForm() {
             return weeklyExpense = weekly;
         }
         else {
-            return;
+            return weeklyExpense = items.amount;
         }
     }
 

@@ -31,22 +31,26 @@ function RenderPiechart(props) {
             saving: 0
         };
 
+        // saving each expense here to be able to subtract from income later
         let totalExpenses = 0;
 
+        // adding each expense to the appropriate category 
         props.userExpenses.map(expense => {
-            totalExpenses += expense.amount;
-            return expenseMap[expense.category] += expense.amount;
+            totalExpenses += expense.weeklyExpense;
+            return expenseMap[expense.category] += expense.weeklyExpense;
         });
 
+        // getting spending and saving values
         expenseMap.spending = (userincome - totalExpenses) - savingGoal;
         expenseMap.saving = savingGoal;
 
+        // setting data in to appropriate format for pie chart to be able to render
         const piechartData = Object.entries(expenseMap).map((value) => {
             return { name: value[0], value: value[1] }
         });
 
+        // saving into state
         setData(piechartData);
-        console.log(piechartData);
     }
 
     // getting income data
@@ -61,7 +65,7 @@ function RenderPiechart(props) {
     }, [user.sub, props.userExpenses]);
 
     // setting up pie chart
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4021'];
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4021', '#ca6072'];
 
     const RADIAN = Math.PI / 180;
     const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {

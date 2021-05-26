@@ -14,6 +14,7 @@ const expenseData = [
         amount: 300,
         frequency: "fortnightly",
         user_id: "google-oauth2|105678671351572796457",
+        weeklyExpense: 150,
     },
     {
         type: 'electricity bill',
@@ -21,6 +22,7 @@ const expenseData = [
         amount: 400,
         frequency: "quaterly",
         user_id: "google-oauth2|105678671351572796457",
+        weeklyExpense: 33.3,
     },
     {
         type: 'gas bill',
@@ -28,6 +30,7 @@ const expenseData = [
         amount: 120,
         frequency: "quaterly",
         user_id: "",
+        weeklyExpense: 10,
     },
     {
         type: 'water bill',
@@ -35,6 +38,7 @@ const expenseData = [
         amount: 200,
         frequency: "quaterly",
         user_id: "",
+        weeklyExpense: 16.6,
     },
 ];
 
