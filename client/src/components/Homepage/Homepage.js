@@ -14,15 +14,25 @@ function Homepage() {
     // setting state 
     const [useritems, setUserItems] = useState([]);
     const [usergoals, setUserGoals] = useState([]);
+    const [totalExpenses, setTotalExpenses] = useState("");
 
     // getting data from the api to display on screen specific to user only
     useEffect(() => {
         API.getExpensesById(user.sub)
             .then(res => {
                 setUserItems(res.data);
+                let getWeeklyExpenses = res.data.map(expense => {
+                    return expense.weeklyExpense;
+                });
+                let addExpenses = getWeeklyExpenses.reduce(getSum, 2);
+                setTotalExpenses(addExpenses);
             })
             .catch(err => console.log(err));
     }, [user.sub]);
+
+    function getSum(total, num) {
+        return total + Math.round(num);
+    }
 
     useEffect(() => {
         API.getSavingsById(user.sub)
@@ -45,6 +55,7 @@ function Homepage() {
 
                 <h2>Expenses</h2>
                 <Piechart userExpenses={useritems} />
+                <p>In order to save enough money to pay off all your expenses, put away ${totalExpenses} each week</p>
 
                 <h2>Savings</h2>
                 <Barchart userGoals={usergoals} />
