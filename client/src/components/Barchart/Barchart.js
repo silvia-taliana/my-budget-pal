@@ -1,23 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-function renderBarchart(props) {
+function RenderBarchart(props) {
+    //setting state for saving goals
+    const [data, setData] = useState([
+        { name: '', Goal: 0, Saved: 0 }
+    ])
 
-    // setting up array for bar chart values
-    let data = [];
-
-    // function to add saving goals to bar chart
-    function addGoal() {
-        let saved = 500; // TEMPORARY VALUE!!
-        props.userGoals.map(goal => {
-            data.push({ name: goal.goal, Goal: goal.amount - saved, Saved: saved });
-            return data;
+    // getting values for bar chart and saving into state
+    useEffect(() => {
+        let saved = 500;
+        let newGoal = props.userGoals.map(goal => {
+            return { name: goal.goal, Goal: goal.amount - saved, Saved: saved };
         })
-    }
+        setData(newGoal);
+    }, [props.userGoals]);
 
-    // running function when page loads
-    addGoal();
-
+    // returning bar chart 
     return (
         <BarChart
             width={500}
@@ -41,4 +40,4 @@ function renderBarchart(props) {
     )
 };
 
-export default renderBarchart;
+export default RenderBarchart;
