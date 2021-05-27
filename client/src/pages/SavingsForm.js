@@ -4,8 +4,11 @@ import API from "../utils/API"
 
 function SavingsForm() {
     // setting state for saving goals
-    const [goals, setGoals] = useState({});
+    const [goals, setGoals] = useState({
+        week: 0, month: 0, year: 0
+    });
     const [usergoals, setUserGoals] = useState([]);
+    // const [weeklySave, setWeeklySave] = useState([]);
 
     // defining variable for user id
     let userId = "";
@@ -76,6 +79,16 @@ function SavingsForm() {
         document.getElementById("savingsForm").reset();
     }
 
+    // function to calculate how much user needs to save each week to reach goal 
+    const calcWeeklySave = (usergoal) => {
+        let weeks = usergoal.timeframe.week;
+        let months = usergoal.timeframe.month;
+        let years = usergoal.timeframe.year;
+        let totalWeeks = weeks + (months * 4) + (years * 52);
+        let goalAmount = usergoal.amount / totalWeeks;
+        return goalAmount.toFixed(2);
+    }
+
     // function to delete saving by id
     function deleteSaving(id) {
         API.deleteSaving(id)
@@ -90,7 +103,38 @@ function SavingsForm() {
                 setUserGoals(res.data);
             })
             .catch(err => console.log(err));
-    }, [user.sub, usergoals]);
+    }, [user.sub, setUserGoals]);
+
+    // functions to conditionally return timeframe
+    const checkWeek = (usergoal) => {
+        let week = usergoal.timeframe.week;
+        if (week === 0 || null || undefined) {
+            return "";
+        }
+        else {
+            return week + " week(s)";
+        }
+    }
+
+    const checkMonth = (usergoal) => {
+        let month = usergoal.timeframe.month;
+        if (month === 0 || null || undefined) {
+            return "";
+        }
+        else {
+            return month + " month(s)";
+        }
+    }
+
+    const checkYear = (usergoal) => {
+        let year = usergoal.timeframe.year;
+        if (year === 0 || null || undefined) {
+            return "";
+        }
+        else {
+            return year + " year(s)";
+        }
+    }
 
     // returning html
     return (
@@ -131,6 +175,7 @@ function SavingsForm() {
                         <th scope="col">Goal</th>
                         <th scope="col">Amount</th>
                         <th scope="col">Timeframe</th>
+                        <th scope="col">To kick this goal</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -139,8 +184,9 @@ function SavingsForm() {
                         return (
                             <tr key={usergoal._id} >
                                 <th scope="row">{usergoal.goal} </th>
-                                <td>{usergoal.amount}</td>
-                                <td>{usergoal.timeframe.week}w + {usergoal.timeframe.month}m + {usergoal.timeframe.year}y</td>
+                                <td>${usergoal.amount}</td>
+                                <td>{checkWeek(usergoal)} {checkMonth(usergoal)} {checkYear(usergoal)}</td>
+                                <td>Save ${calcWeeklySave(usergoal)} each week!</td>
                                 <td><button onClick={() => deleteSaving(usergoal._id)}>Delete</button></td>
                             </tr>
                         )
