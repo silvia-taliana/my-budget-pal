@@ -9,7 +9,7 @@ function RenderBarchart(props) {
 
     // getting values for bar chart and saving into state
     useEffect(() => {
-        let saved = 500;
+        let saved = 10;
         let newGoal = props.userGoals.map(goal => {
             return { name: goal.goal, Goal: goal.amount - saved, Saved: saved };
         })

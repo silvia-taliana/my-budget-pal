@@ -8,7 +8,6 @@ function SavingsForm() {
         week: 0, month: 0, year: 0
     });
     const [usergoals, setUserGoals] = useState([]);
-    // const [weeklySave, setWeeklySave] = useState([]);
 
     // defining variable for user id
     let userId = "";

@@ -17,6 +17,10 @@ function Homepage() {
     const [totalExpenses, setTotalExpenses] = useState("");
     const [money, setMoney] = useState("");
     const [payCycle, setPayCycle] = useState("week");
+    const [moneyToSave, setMoneyToSave] = useState(0);
+    const [moneyLeftover, setMoneyLeftover] = useState(0);
+    const [goalAllocationMap, setGoalAllocationMap] = useState({});
+    // const [allocationTotal, setAllocationTotal] = useState(0);
 
     // getting data from the api to display on screen specific to user only
     useEffect(() => {
@@ -42,6 +46,11 @@ function Homepage() {
         API.getSavingsById(user.sub)
             .then(res => {
                 setUserGoals(res.data);
+                let goalMap = {};
+                res.data.map(goal => {
+                    return goalMap[goal._id] = 0
+                });
+                setGoalAllocationMap(goalMap);
             })
             .catch(err => console.log(err));
     }, [user.sub]);
@@ -67,6 +76,41 @@ function Homepage() {
         }
     }
 
+    const getMoney = () => {
+        API.getIncomeById(user.sub)
+            .then(res => {
+                setMoneyToSave(res.data[0].totalSaving);
+                setMoneyLeftover(res.data[0].totalSaving);
+            })
+            .catch(err => console.log(err));
+    }
+
+    function updateGoalAlloc(id, newValue) {
+        let newAllocationMap = { ...goalAllocationMap, [id]: newValue }
+        setGoalAllocationMap(newAllocationMap);
+        getAllocation(newAllocationMap);
+    }
+
+    function getAllocation(newAllocationMap) {
+        let allocated = [];
+        for (let value of Object.values(newAllocationMap)) {
+            let setValue = value;
+            allocated.push(parseInt(setValue));
+        }
+        console.log(allocated);
+        let totalAllocation = allocated.reduce(getTotal);
+        calcMoney(totalAllocation);
+    }
+
+    function getTotal(acc, item) {
+        return acc + item;
+    }
+
+    function calcMoney(totalAllocation) {
+        let moneyLeft = moneyToSave - totalAllocation;
+        setMoneyLeftover(moneyLeft);
+    }
+
     // rendering html on to screen providing user is authenticated
     return (
         isAuthenticated && (
@@ -84,6 +128,12 @@ function Homepage() {
 
                 <h2>Savings</h2>
                 <Barchart userGoals={usergoals} />
+                <h3>Allocate your savings</h3>
+                <button onClick={() => getMoney()}>Show me the money!</button>
+                <p>Amount available: ${moneyLeftover}</p>
+                {usergoals.map(goal => {
+                    return <div key={goal._id}><label>{goal.goal}</label> <input onChange={(e) => updateGoalAlloc(goal._id, e.target.value)}></input></div>
+                })}
 
             </div>
         )
