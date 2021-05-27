@@ -76,6 +76,7 @@ function Homepage() {
         }
     }
 
+    // getting saving data from api to set states ready for allocating savings
     const getMoney = () => {
         API.getIncomeById(user.sub)
             .then(res => {
@@ -85,16 +86,25 @@ function Homepage() {
             .catch(err => console.log(err));
     }
 
+    // setting up array of saving allocations with unique id for each saving goal
     function updateGoalAlloc(id, newValue) {
         let newAllocationMap = { ...goalAllocationMap, [id]: newValue }
         setGoalAllocationMap(newAllocationMap);
         getAllocation(newAllocationMap);
     }
 
+    // getting each saving goal and adding to array to get total
     function getAllocation(newAllocationMap) {
         let allocated = [];
         for (let value of Object.values(newAllocationMap)) {
-            let setValue = value;
+            let setValue = 0;
+            console.log(value);
+            if (!value) {
+                setValue = 0;
+            }
+            else {
+                setValue = value;
+            }
             allocated.push(parseInt(setValue));
         }
         console.log(allocated);
@@ -102,10 +112,12 @@ function Homepage() {
         calcMoney(totalAllocation);
     }
 
+    // getting total of allocated savings 
     function getTotal(acc, item) {
         return acc + item;
     }
 
+    // subtracting total allocation away from initial saving amount
     function calcMoney(totalAllocation) {
         let moneyLeft = moneyToSave - totalAllocation;
         setMoneyLeftover(moneyLeft);
