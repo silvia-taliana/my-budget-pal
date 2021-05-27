@@ -15,6 +15,8 @@ function Homepage() {
     const [useritems, setUserItems] = useState([]);
     const [usergoals, setUserGoals] = useState([]);
     const [totalExpenses, setTotalExpenses] = useState("");
+    const [money, setMoney] = useState("");
+    const [payCycle, setPayCycle] = useState("week");
 
     // getting data from the api to display on screen specific to user only
     useEffect(() => {
@@ -30,10 +32,12 @@ function Homepage() {
             .catch(err => console.log(err));
     }, [user.sub]);
 
+    // getting sum of all of the weekly expenses
     function getSum(total, num) {
         return total + Math.round(num);
     }
 
+    // getting savings data 
     useEffect(() => {
         API.getSavingsById(user.sub)
             .then(res => {
@@ -41,6 +45,27 @@ function Homepage() {
             })
             .catch(err => console.log(err));
     }, [user.sub]);
+
+    // function to set money value showing total expenses
+    useEffect(() => {
+        setMoney(totalExpenses);
+    }, [totalExpenses]);
+
+    // function to toggle total expenses based on pay cycle to suit users needs
+    function toggleExpenses() {
+        if (payCycle === "week") {
+            setPayCycle("fortnight");
+            setMoney(totalExpenses * 2);
+        }
+        else if (payCycle === "fortnight") {
+            setPayCycle("month");
+            setMoney(totalExpenses * 4);
+        }
+        else {
+            setPayCycle("week");
+            setMoney(totalExpenses);
+        }
+    }
 
     // rendering html on to screen providing user is authenticated
     return (
@@ -55,7 +80,7 @@ function Homepage() {
 
                 <h2>Expenses</h2>
                 <Piechart userExpenses={useritems} />
-                <p>In order to save enough money to pay off all your expenses, put away ${totalExpenses} each week</p>
+                <p>In order to save enough money to pay off all your expenses, put away ${money} each {payCycle} <button onClick={() => toggleExpenses()}>Toggle</button></p>
 
                 <h2>Savings</h2>
                 <Barchart userGoals={usergoals} />
