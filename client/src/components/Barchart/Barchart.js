@@ -9,12 +9,26 @@ function RenderBarchart(props) {
 
     // getting values for bar chart and saving into state
     useEffect(() => {
-        let saved = 10;
-        let newGoal = props.userGoals.map(goal => {
-            return { name: goal.goal, Goal: goal.amount - saved, Saved: saved };
-        })
-        setData(newGoal);
-    }, [props.userGoals]);
+        //saving arrays into variables
+        let goalId = Object.keys(props.goalAllocation);
+        let savedAmount = Object.values(props.goalAllocation);
+        let goalsArray = props.userGoals;
+
+        // creating new array out of goalId and savedAmount
+        let newArray = [];
+        for (let i = 0; i < goalId.length; i++) {
+            newArray.push({ id: goalId[i], saving: savedAmount[i] })
+        }
+
+        // creating final array and setting up structure ready for barchart
+        let finalArray = [];
+        for (let i = 0; i < newArray.length; i++) {
+            finalArray.push({ name: goalsArray[i].goal, Goal: goalsArray[i].amount - newArray[i].saving, Saved: newArray[i].saving })
+        }
+
+        // saving final array into state
+        setData(finalArray);
+    }, [props.userGoals, props.goalAllocation]);
 
     // returning bar chart 
     return (

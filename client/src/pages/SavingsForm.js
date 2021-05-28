@@ -102,7 +102,7 @@ function SavingsForm() {
                 setUserGoals(res.data);
             })
             .catch(err => console.log(err));
-    }, [user.sub, setUserGoals]);
+    }, [user.sub, usergoals]);
 
     // functions to conditionally return timeframe
     const checkWeek = (usergoal) => {

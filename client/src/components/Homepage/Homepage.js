@@ -20,7 +20,6 @@ function Homepage() {
     const [moneyToSave, setMoneyToSave] = useState(0);
     const [moneyLeftover, setMoneyLeftover] = useState(0);
     const [goalAllocationMap, setGoalAllocationMap] = useState({});
-    // const [allocationTotal, setAllocationTotal] = useState(0);
 
     // getting data from the api to display on screen specific to user only
     useEffect(() => {
@@ -86,19 +85,25 @@ function Homepage() {
             .catch(err => console.log(err));
     }
 
-    // setting up array of saving allocations with unique id for each saving goal
+    // setting up array of saving allocations with unique id for each saving goal and ensuring NaN values count as zero
     function updateGoalAlloc(id, newValue) {
-        let newAllocationMap = { ...goalAllocationMap, [id]: newValue }
+        let allocatedValue = 0;
+        if (!newValue) {
+            allocatedValue = 0;
+        }
+        else {
+            allocatedValue = parseInt(newValue);
+        }
+        let newAllocationMap = { ...goalAllocationMap, [id]: allocatedValue }
         setGoalAllocationMap(newAllocationMap);
         getAllocation(newAllocationMap);
     }
 
-    // getting each saving goal and adding to array to get total
+    // getting each saving goal and adding to array to get total and ensuring NaN values count as zero
     function getAllocation(newAllocationMap) {
         let allocated = [];
         for (let value of Object.values(newAllocationMap)) {
             let setValue = 0;
-            console.log(value);
             if (!value) {
                 setValue = 0;
             }
@@ -107,7 +112,6 @@ function Homepage() {
             }
             allocated.push(parseInt(setValue));
         }
-        console.log(allocated);
         let totalAllocation = allocated.reduce(getTotal);
         calcMoney(totalAllocation);
     }
@@ -139,7 +143,7 @@ function Homepage() {
                 <p>In order to save enough money to pay off all your expenses, put away ${money} each {payCycle} <button onClick={() => toggleExpenses()}>Toggle</button></p>
 
                 <h2>Savings</h2>
-                <Barchart userGoals={usergoals} />
+                <Barchart userGoals={usergoals} goalAllocation={goalAllocationMap} />
                 <h3>Allocate your savings</h3>
                 <button onClick={() => getMoney()}>Show me the money!</button>
                 <p>Amount available: ${moneyLeftover}</p>
