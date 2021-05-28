@@ -127,6 +127,18 @@ function Homepage() {
         setMoneyLeftover(moneyLeft);
     }
 
+    // function getSavedAllocation() {
+    //     let input = document.getElementById(`${goalAllocationMap._id}`).val();
+    //     localStorage.setItem(`${goalAllocationMap._id}`, JSON.stringify(input));
+    //     console.log(input);
+    // }
+
+    // function to clear form input 
+    // const clearForm = () => {
+    //     document.getElementById("allocationForm").reset();
+    //     console.log(goalAllocationMap);
+    // }
+
     // rendering html on to screen providing user is authenticated
     return (
         isAuthenticated && (
@@ -144,12 +156,16 @@ function Homepage() {
 
                 <h2>Savings</h2>
                 <Barchart userGoals={usergoals} goalAllocation={goalAllocationMap} />
+
                 <h3>Allocate your savings</h3>
                 <button onClick={() => getMoney()}>Show me the money!</button>
                 <p>Amount available: ${moneyLeftover}</p>
+                {/* <form id="allocationForm"> */}
                 {usergoals.map(goal => {
-                    return <div key={goal._id}><label>{goal.goal}</label> <input onChange={(e) => updateGoalAlloc(goal._id, e.target.value)}></input></div>
+                    return <div key={goal._id}><label>{goal.goal}</label> <input id={goal._id} onChange={(e) => updateGoalAlloc(goal._id, e.target.value)}></input></div>
                 })}
+                {/* <button onClick={getSavedAllocation}>Confirm Allocation</button>
+                </form> */}
 
             </div>
         )
