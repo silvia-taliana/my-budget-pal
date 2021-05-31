@@ -1,0 +1,35 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+    border-bottom-color: rgb(1, 61, 1);
+    border-top-color: white;
+    border-left-color: white;
+    border-right-color: white;
+    border-style: solid;
+    background-color: white;
+    font-family: 'Lora', serif;
+}
+
+a {
+    font-size: 20px;
+    text-decoration: none;
+}
+
+a:visited {
+    color: black;
+}
+
+#logoContainer {
+    display: inline-flex;
+}
+
+#logoAppName {
+    font-size: 30px;
+    margin: 5px;
+}
+
+#logoImg {
+    width: 40px;
+    margin: 5px;
+}
+

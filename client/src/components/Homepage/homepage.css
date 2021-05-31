@@ -1,0 +1,75 @@
+.page {
+    background-color: rgb(212, 253, 212);
+    font-family: 'Lora', serif;
+}
+
+.container {
+    padding-top: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+#welcomeUser {
+    font-size: 35px;
+}
+
+.homepageTitles {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* styles all buttons throughout app */
+button {
+    max-height: 40px;
+    border-radius: 5%;
+    border-color: rgb(1, 63, 1);
+    color:rgb(1, 63, 1);
+    background-color: rgb(132, 202, 132);
+    font-weight: bold;
+}
+
+#showMeTheMoneyBtn {
+    width: 210px;
+    margin-left: 30px;
+}
+
+.card {
+    border-style: solid;
+    border-color: rgb(1, 63, 1);
+    border-width: 2px;
+    margin-left: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    max-width: 350px;
+}
+
+#expenseInfo,
+#barchartPosition {
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+#savingsAllocatorContainer {
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+#allocatorInput {
+    display: flex;
+    max-width: 300px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#savingGoal {
+    font-size: 20px;
+}
+
+#allocationInfo {
+    margin-bottom: 100px;
+}

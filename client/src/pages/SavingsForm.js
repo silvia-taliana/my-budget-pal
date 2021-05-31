@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import "./pages.css"
+import { Form, Container, Col, Row, Card } from "react-bootstrap";
 import { useAuth0 } from '@auth0/auth0-react';
-import API from "../utils/API"
+import API from "../utils/API";
+import Footer from "../components/Footer/Footer";
 
 function SavingsForm() {
     // setting state for saving goals
@@ -137,61 +140,112 @@ function SavingsForm() {
 
     // returning html
     return (
-        <div>
-            <h1>Savings</h1>
-            <form id="savingsForm">
-                <label>Saving Goal:</label>
-                <input
-                    onChange={handleInputChange}
-                    name="goal"
-                    placeholder="e.g. Ski trip"></input>
-                <label>Amount:</label>
-                <input
-                    onChange={handleInputChange}
-                    name="amount"
-                    placeholder="$"></input>
-                <label>Timeframe:</label>
-                <input
-                    onChange={handleInputChange}
-                    name="week"
-                    placeholder="0"></input><label>Week(s)</label>
-                <input
-                    onChange={handleInputChange}
-                    name="month"
-                    placeholder="0"></input><label>Month(s)</label>
-                <input
-                    onChange={handleInputChange}
-                    name="year"
-                    placeholder="0"></input><label>Year(s)</label>
-                <button onClick={addSavingFormHandler}>Add Goal</button>
-            </form>
+        <div className="page">
+            <Container>
+                <Row>
+                    <Col>
+                        <h1 className="savingsTitles">Savings</h1>
+                    </Col>
+                </Row>
+                <Form id="savingsForm">
+                    <Row>
+                        <Col>
+                            <div className="savingsFormCol">
+                                <Card id="savingGoalCard">
+                                    <Card.Body>
+                                        <Card.Text>
+                                            Add your saving goals here!
+                                    </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                                <Form.Group>
+                                    <Form.Label>Saving Goal:</Form.Label>
+                                    <Form.Control
+                                        onChange={handleInputChange}
+                                        name="goal"
+                                        placeholder="e.g. Ski trip"></Form.Control>
+                                </Form.Group>
 
-            <h2>Savings List</h2>
+                                <Form.Group>
+                                    <Form.Label>Amount:</Form.Label>
+                                    <Form.Control
+                                        onChange={handleInputChange}
+                                        name="amount"
+                                        placeholder="$"></Form.Control>
+                                </Form.Group>
+                            </div>
+                        </Col>
 
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Goal</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">Timeframe</th>
-                        <th scope="col">To kick this goal</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {usergoals.map(usergoal => {
-                        return (
-                            <tr key={usergoal._id} >
-                                <th scope="row">{usergoal.goal} </th>
-                                <td>${usergoal.amount}</td>
-                                <td>{checkWeek(usergoal)} {checkMonth(usergoal)} {checkYear(usergoal)}</td>
-                                <td>Save ${calcWeeklySave(usergoal)} each week!</td>
-                                <td><button onClick={() => deleteSaving(usergoal._id)}>Delete</button></td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
+                        <Col>
+                            <div className="savingsFormCol">
+                                <Form.Label>Timeframe:</Form.Label>
+                                <Form.Group>
+                                    <Form.Control
+                                        onChange={handleInputChange}
+                                        name="week"
+                                        placeholder="0">
+
+                                    </Form.Control>
+                                    <Form.Label>Week(s)</Form.Label>
+                                </Form.Group>
+
+                                <Form.Group>
+                                    <Form.Control
+                                        onChange={handleInputChange}
+                                        name="month"
+                                        placeholder="0"></Form.Control>
+                                    <Form.Label>Month(s)</Form.Label>
+                                </Form.Group>
+
+                                <Form.Group>
+                                    <Form.Control
+                                        onChange={handleInputChange}
+                                        name="year"
+                                        placeholder="0"></Form.Control>
+                                    <Form.Label>Year(s)</Form.Label>
+                                </Form.Group>
+                            </div>
+                        </Col>
+
+                        <Col>
+                            <div className="savingsFormCol">
+                                <Form.Group>
+                                    <button onClick={addSavingFormHandler}>Add Goal</button>
+                                </Form.Group>
+                            </div>
+                        </Col>
+                    </Row>
+                </Form>
+
+
+                <h2 className="savingsTitles">Your saving goals</h2>
+
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Goal</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Timeframe</th>
+                            <th scope="col">To kick this goal</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {usergoals.map(usergoal => {
+                            return (
+                                <tr key={usergoal._id} >
+                                    <th scope="row">{usergoal.goal} </th>
+                                    <td>${usergoal.amount}</td>
+                                    <td>{checkWeek(usergoal)} {checkMonth(usergoal)} {checkYear(usergoal)}</td>
+                                    <td>Save ${calcWeeklySave(usergoal)} each week!</td>
+                                    <td><button onClick={() => deleteSaving(usergoal._id)}>Delete</button></td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+            </Container>
+            <Footer />
         </div>
     );
 }

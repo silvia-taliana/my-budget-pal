@@ -1,0 +1,94 @@
+#savingsForm,
+#expensesForm,
+#incomeForm {
+    border-style: solid;
+    border-color: rgb(1, 63, 1);
+    border-radius: 1%;
+    margin-bottom: 30px;
+}
+
+.savingsFormCol, 
+.expensesFormCol,
+.incomeFormCol {
+    min-width: 200px;
+    max-width: 350px;
+    padding: 10%;
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+#savingGoalCard, 
+#expenseCard {
+    margin-left: 0;
+}
+
+.savingsTitles, 
+.expensesTitles,
+.incomeTitles {
+    margin-bottom: 30px;
+}
+
+#addSavingBtn {
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.table {
+    font-size: 14px;
+}
+
+.incomeDetails {
+    margin-left: 30px;
+}
+
+#welcomeLoginContainer {
+    height: 200px;
+    width: 90%;
+    margin-bottom: 50px;
+    margin-top: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-style: solid;
+    border-color: rgb(1, 63, 1);
+    border-radius: 1%;
+}
+
+.welcomeLogin,
+.welcomePageAppInfo {
+    margin: 0;
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+#welcomeTitle {
+width: 280px;
+font-size: 400%;
+}
+
+#loginBtn, 
+#welcomeTitle, 
+#expensesInfo,
+#savingsInfo,
+.welcomeScreenImg {
+    margin: 0;
+    position: relative;
+    left: 50%;
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+#loginBtn {
+    width: 200px;
+    height: 100px;
+}
+
+.welcomeScreenImg {
+    width: 350px;
+}
+

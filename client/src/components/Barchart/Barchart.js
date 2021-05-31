@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+// import "./barchart.css";
 
 function RenderBarchart(props) {
     //setting state for saving goals
@@ -33,7 +34,7 @@ function RenderBarchart(props) {
     // returning bar chart 
     return (
         <BarChart
-            width={500}
+            width={350}
             height={300}
             data={data}
             margin={{
@@ -47,9 +48,9 @@ function RenderBarchart(props) {
             <XAxis dataKey="name" />
             <YAxis dataKey="Goal" />
             <Tooltip />
-            <Legend />
             <Bar dataKey="Saved" stackId="a" fill="#8884d8" />
             <Bar dataKey="Goal" stackId="a" fill="#82ca9d" />
+            {/* <Legend /> */}
         </BarChart>
     )
 };

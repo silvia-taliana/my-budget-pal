@@ -1,6 +1,6 @@
 // import React from "react";
 import React, { useState, useEffect } from "react";
-import { PieChart, Pie, Cell, Legend } from 'recharts';
+import { PieChart, Pie, Cell, Legend, Tooltip } from 'recharts';
 import { useAuth0 } from '@auth0/auth0-react';
 import API from "../../utils/API"
 
@@ -15,7 +15,7 @@ function RenderPiechart(props) {
         { name: 'Other', value: 0 },
         { name: 'Spending', value: 0 },
         { name: 'Saving', value: 0 }
-    ])
+    ]);
 
     // getting user information
     const { user } = useAuth0();
@@ -96,6 +96,7 @@ function RenderPiechart(props) {
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
             </Pie>
+            <Tooltip />
             <Legend />
         </PieChart>
     )

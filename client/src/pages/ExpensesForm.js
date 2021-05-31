@@ -1,6 +1,9 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import API from "../utils/API"
 import React, { useState, useEffect } from "react";
+import Footer from "../components/Footer/Footer";
+import "./pages.css"
+import { Form, Container, Col, Row, Card } from "react-bootstrap";
 
 // setting up array of options for categories
 const catOptions = [
@@ -171,60 +174,107 @@ function ExpensesForm() {
 
     // returning html
     return (
-        <div>
-            <h1>Add Expenses</h1>
-            <form id="expensesForm">
-                <label>Expense type:</label>
-                <input
-                    onChange={handleInputChange}
-                    name="type"
-                    placeholder="e.g. Elictricity bill"></input>
-                <label>Category:</label>
-                <select name="category" value={items.category} onChange={handleInputChange}>
-                    {catOptions.map((option) => (
-                        <option key={option.value} value={option.value}>{option.label}</option>
-                    ))}
-                </select>
-                <label>Amount:</label>
-                <input
-                    onChange={handleInputChange}
-                    name="amount"
-                    placeholder="$"></input>
-                <label>Frequency:</label>
-                <select name="frequency" value={items.frequency} onChange={handleInputChange}>
-                    {freqOptions.map((option) => (
-                        <option key={option.value} value={option.value}>{option.label}</option>
-                    ))}
-                </select>
-                <button onClick={addExpenseFormHandler}>Add Expense</button>
-            </form>
+        <div className="page">
+            <Container>
+                <Row>
+                    <Col>
+                        <h1 className="expensesTitles">Add Expenses</h1>
+                    </Col>
+                </Row>
 
-            <h2>Expenses List</h2>
+                <Form id="expensesForm">
+                    <Row>
+                        <Col>
+                            <div className="expensesFormCol">
 
-            <table className="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Type</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Amount</th>
-                        <th scope="col">Frequency</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {useritems.map(useritem => {
-                        return (
-                            <tr key={useritem._id}>
-                                <th scope="row">{useritem.type} </th>
-                                <td>{useritem.category}</td>
-                                <td>{useritem.amount}</td>
-                                <td>{useritem.frequency}</td>
-                                <td><button onClick={() => deleteExpense(useritem._id)}>Delete</button></td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
+                                <Card id="expenseCard">
+                                    <Card.Body>
+                                        <Card.Text>
+                                            Add your expenses here!
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+
+                                <Form.Group>
+                                    <Form.Label>Expense type:</Form.Label>
+                                    <Form.Control
+                                        onChange={handleInputChange}
+                                        name="type"
+                                        placeholder="e.g. Elictricity bill">
+                                    </Form.Control>
+                                </Form.Group>
+
+                                <Form.Group>
+                                    <Form.Label>Category:</Form.Label>
+                                    <Form.Control as="select" name="category" value={items.category} onChange={handleInputChange}>
+                                        {catOptions.map((option) => (
+                                            <option key={option.value} value={option.value}>{option.label}</option>
+                                        ))}
+                                    </Form.Control>
+                                </Form.Group>
+                            </div>
+                        </Col>
+
+                        <Col>
+                            <div className="expensesFormCol">
+                                <Form.Group>
+                                    <Form.Label>Amount:</Form.Label>
+                                    <Form.Control
+                                        onChange={handleInputChange}
+                                        name="amount"
+                                        placeholder="$">
+                                    </Form.Control>
+                                </Form.Group>
+
+                                <Form.Group>
+                                    <Form.Label>Frequency:</Form.Label>
+                                    <Form.Control as="select" name="frequency" value={items.frequency} onChange={handleInputChange}>
+                                        {freqOptions.map((option) => (
+                                            <option key={option.value} value={option.value}>{option.label}</option>
+                                        ))}
+                                    </Form.Control>
+                                </Form.Group>
+                            </div>
+                        </Col>
+
+                        <Col>
+                            <div className="expensesFormCol">
+                                <Form.Group>
+                                    <button onClick={addExpenseFormHandler}>Add Expense</button>
+                                </Form.Group>
+                            </div>
+                        </Col>
+                    </Row>
+                </Form>
+
+                <h2 className="expensesTitles">Expenses List</h2>
+
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Type</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Frequency</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {useritems.map(useritem => {
+                            return (
+                                <tr key={useritem._id}>
+                                    <th scope="row">{useritem.type} </th>
+                                    <td>{useritem.category}</td>
+                                    <td>{useritem.amount}</td>
+                                    <td>{useritem.frequency}</td>
+                                    <td><button onClick={() => deleteExpense(useritem._id)}>Delete</button></td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+            </Container>
+            <Footer />
         </div>
     );
 }

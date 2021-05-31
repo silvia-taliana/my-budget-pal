@@ -1,6 +1,9 @@
+import "./pages.css"
+import { Form, Container, Col, Row, Card } from "react-bootstrap";
 import { useAuth0 } from '@auth0/auth0-react';
 import API from "../utils/API"
 import React, { useState, useEffect } from "react";
+import Footer from "../components/Footer/Footer";
 
 const payCycle = [
     {
@@ -103,32 +106,85 @@ function Profile() {
 
     // returning html
     return (
-        <div>
-            <h1>Profile Page</h1>
+        <div className="page">
+            <Container>
+                <Row>
+                    <Col>
+                        <h1 className="incomeTitles">Profile Page</h1>
+                    </Col>
+                </Row>
 
-            <form id="incomeForm">
-                <label>Income:</label>
-                <input onChange={handleInputChange} name="income" placeholder="$"></input>
-                <label>Per:</label>
-                <select onChange={handleInputChange} name="payCycle">
-                    {payCycle.map((option) => (
-                        <option key={option.value} value={option.value}>{option.label}</option>
-                    ))}
-                </select>
-                <label>Total weekly saving goal:</label>
-                <input onChange={handleInputChange} name="totalSaving" placeholder="$"></input>
-                <button onClick={addIncomeFormHandler}>Submit</button>
-            </form>
+                <Form id="incomeForm">
+                    <Row>
+                        <Col>
+                            <div className="incomeFormCol">
+                                <Card id="incomeCard">
+                                    <Card.Body>
+                                        <Card.Text>
+                                            Add your income details and total saving goal here!
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            </div>
+                        </Col>
 
-            <h2>Income:</h2>
-            {userincome.map(income => {
-                return <p key={income._id}>${income.income} per {income.payCycle}</p>
-            })}
+                        <Col>
+                            <div className="incomeFormCol">
+                                <Form.Group>
+                                    <Form.Label>Income:</Form.Label>
+                                    <Form.Control onChange={handleInputChange} name="income" placeholder="$"></Form.Control>
+                                </Form.Group>
 
-            <h2>Saving goal:</h2>
-            {userincome.map(income => {
-                return <p key={income._id}>${income.totalSaving} per week</p>
-            })}
+                                <Form.Group>
+                                    <Form.Label>Per:</Form.Label>
+                                    <Form.Control as="select" onChange={handleInputChange} name="payCycle">
+                                        {payCycle.map((option) => (
+                                            <option key={option.value} value={option.value}>{option.label}</option>
+                                        ))}
+                                    </Form.Control>
+                                </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Total weekly saving goal:</Form.Label>
+                                    <Form.Control onChange={handleInputChange} name="totalSaving" placeholder="$"></Form.Control>
+                                </Form.Group>
+                            </div>
+                        </Col>
+
+                        <Col>
+                            <div className="incomeFormCol">
+                                <Form.Group>
+                                    <button onClick={addIncomeFormHandler}>Submit</button>
+                                </Form.Group>
+                            </div>
+                        </Col>
+                    </Row>
+                </Form>
+
+                <Row>
+                    <Col>
+                        <h2 className="incomeTitles">Your details</h2>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <div className="incomeDetails">
+                            <h3 className="incomeTitles">Income:</h3>
+                            {userincome.map(income => {
+                                return <p key={income._id}>${income.income} per {income.payCycle}</p>
+                            })}
+                        </div>
+                    </Col>
+                    <Col>
+                        <div className="incomeDetails">
+                            <h3 className="incomeTitles">Saving goal:</h3>
+                            {userincome.map(income => {
+                                return <p key={income._id}>${income.totalSaving} per week</p>
+                            })}
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
+            <Footer />
         </div>
     );
 }

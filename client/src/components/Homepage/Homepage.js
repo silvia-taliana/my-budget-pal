@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import API from "../../utils/API";
 import Piechart from "../Piechart/Piechart";
 import Barchart from "../Barchart/Barchart";
+import Footer from "../Footer/Footer";
 import { useAuth0 } from '@auth0/auth0-react';
+import { Card, Col, Row, Container } from "react-bootstrap";
+import "./homepage.css";
 
 function Homepage() {
     // logout function
@@ -127,46 +130,105 @@ function Homepage() {
         setMoneyLeftover(moneyLeft);
     }
 
-    // function getSavedAllocation() {
-    //     let input = document.getElementById(`${goalAllocationMap._id}`).val();
-    //     localStorage.setItem(`${goalAllocationMap._id}`, JSON.stringify(input));
-    //     console.log(input);
-    // }
-
-    // function to clear form input 
-    // const clearForm = () => {
-    //     document.getElementById("allocationForm").reset();
-    //     console.log(goalAllocationMap);
-    // }
-
     // rendering html on to screen providing user is authenticated
     return (
         isAuthenticated && (
-            <div>
-                <h1>My Budget Pal</h1>
-                <h2>Welcome {user.name}</h2>
-                <button
-                    onClick={() => logout()}>
-                    Logout
-            </button>
+            <div className="page">
+                <Container>
+                    <Row>
+                        <Col>
+                            <header>
+                                <h1 id="welcomeUser">Welcome {user.name}</h1>
+                                <button id="logoutBtn"
+                                    onClick={() => logout()}>
+                                    Logout
+                                </button>
+                            </header>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Card>
+                                <Card.Body>
+                                    <Card.Text>
+                                        Get started by inserting your income details in the profile tab!
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
 
-                <h2>Expenses</h2>
-                <Piechart userExpenses={useritems} />
-                <p>In order to save enough money to pay off all your expenses, put away ${money} each {payCycle} <button onClick={() => toggleExpenses()}>Toggle</button></p>
+                    <Row>
+                        <Col>
+                            <h2 className="homepageTitles">Expenses</h2>
+                            <Piechart userExpenses={useritems} />
+                        </Col>
+                        <Col>
+                            <div id="expenseInfo">
+                                <Row>
+                                    <Card>
+                                        <Card.Body>
+                                            <Card.Text>
+                                                Insert all of your expenses in the expenses tab to see how you are spending your money in the pie chart
+                                            </Card.Text>
+                                        </Card.Body>
+                                    </Card>
+                                </Row>
 
-                <h2>Savings</h2>
-                <Barchart userGoals={usergoals} goalAllocation={goalAllocationMap} />
+                                <Row>
+                                    <Card>
+                                        <Card.Body>
+                                            <Card.Title>
+                                                Top Tip!
+                                            </Card.Title>
+                                            <Card.Text>
+                                                In order to save enough money to pay off all your expenses, put away ${money} each {payCycle} <button onClick={() => toggleExpenses()}>Toggle</button>
+                                            </Card.Text>
+                                        </Card.Body>
+                                    </Card>
+                                </Row>
+                            </div>
+                        </Col>
+                    </Row>
 
-                <h3>Allocate your savings</h3>
-                <button onClick={() => getMoney()}>Show me the money!</button>
-                <p>Amount available: ${moneyLeftover}</p>
-                {/* <form id="allocationForm"> */}
-                {usergoals.map(goal => {
-                    return <div key={goal._id}><label>{goal.goal}</label> <input id={goal._id} onChange={(e) => updateGoalAlloc(goal._id, e.target.value)}></input></div>
-                })}
-                {/* <button onClick={getSavedAllocation}>Confirm Allocation</button>
-                </form> */}
+                    <Row>
+                        <Col>
+                            <Row>
+                                <h2 className="homepageTitles">Savings</h2>
+                                <Card>
+                                    <Card.Body>
+                                        <Card.Text>
+                                            Insert your saving goals in the savings tab to see your goals on the bar chart
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            </Row>
+                            <Row>
 
+                                <button id="showMeTheMoneyBtn" onClick={() => getMoney()}>Show me the money $$</button>
+                                <div id="savingsAllocatorContainer">
+                                    <p id="savingGoal">Your saving Goal: ${moneyLeftover}</p>
+                                    {usergoals.map(goal => {
+                                        return <div id="allocatorInput" key={goal._id}><label>{goal.goal}</label> <input placeholder="$" id={goal._id} onChange={(e) => updateGoalAlloc(goal._id, e.target.value)}></input></div>
+                                    })}
+                                </div>
+                                <Card id="allocationInfo">
+                                    <Card.Body>
+                                        <Card.Text>
+                                            Allocate your savings and watch the bar chart to see your money grow!
+                                    </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            </Row>
+                        </Col>
+                        <Col>
+                            <div id="barchartPosition">
+                                <Barchart userGoals={usergoals} goalAllocation={goalAllocationMap} />
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
+                <Footer />
             </div>
         )
     );
