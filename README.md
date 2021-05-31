@@ -15,7 +15,7 @@ My Budget Pal is a MERN full stack application designed to help users easily tra
 * [Questions](#questions)
 
 ## Installation
-The technologies used for this project include MongoDB, Express, React, Node, Auth0, Recharts npm, React-Bootstrap.. Start the application locally with the command "npm start". 
+The technologies used for this project include MongoDB, Express, React, Node, Auth0, Recharts npm and React-Bootstrap. Start the application locally with the command "npm start". 
 
 ## Usage
 The following images are examples of what the user will see in the application. 
