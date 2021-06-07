@@ -1,3 +1,7 @@
+body {
+    background-color: rgb(212, 253, 212);
+}
+
 #savingsForm,
 #expensesForm,
 #incomeForm {

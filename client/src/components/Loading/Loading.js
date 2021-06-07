@@ -4,8 +4,10 @@ import "./loading.css";
 
 function Loading() {
     return (
-        <div className="spinner" id="loadingSymbol">
-            <img src={loading} alt="Loading" />
+        <div className="styleLoading">
+            <div className="spinner" id="loadingSymbol">
+                <img src={loading} alt="Loading" />
+            </div>
         </div>
     )
 };

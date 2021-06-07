@@ -1,5 +1,4 @@
 .page {
-    background-color: rgb(212, 253, 212);
     font-family: 'Lora', serif;
 }
 
@@ -36,6 +35,7 @@ button {
     margin-left: 30px;
 }
 
+/* styles all cards in app */
 .card {
     border-style: solid;
     border-color: rgb(1, 63, 1);
